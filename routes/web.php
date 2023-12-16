@@ -21,6 +21,12 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/trading', function () {
+    return view('trading');
+})->middleware(['auth', 'verified'])->name('trading');
+Route::get('/news', function () {
+    return view('news');
+})->middleware(['auth', 'verified'])->name('news');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
