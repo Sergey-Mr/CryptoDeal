@@ -46,9 +46,64 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+                    <table style="width: 100%">
+                      <thead>
+                          <tr>
+                              <th>Symbol</th>
+                              <th>Name</th>
+                              <th>Current Price</th>
+                              <th>Percent Change</th>
+                              <th>Buy/Sell</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                      @php
+                          $i = 0;
+                          $data = $cryptocurrencies['data'];
+                          $prices = $prices['data'];
+                          $count = count($data);
+                      @endphp
+
+                      @while ($i < $count)
+                          @php
+                              $cryptocurrency = $data[$i];
+                              $price = $prices[$i];
+                              $index = $cryptocurrency['coin_symbol'];
+                              $i++;
+                          @endphp
+                          <tr>
+                              <td class="text-center">{{ $cryptocurrency['coin_symbol'] }}</td>
+                              <td class="text-center">{{ $cryptocurrency['coin_name'] }}</td>
+                              <td class="text-center">{{ $price['coin_price'] }}</td>
+                              <td class="text-center">{{ $cryptocurrency['percent_change_24h'] }}%</td>
+                              <td class="text-center">
+                                <button class="bg-green-500 text-white">Buy</button>
+                                <button class="bg-red-500 text-white">Sell</button>
+                              </td>
+                          </tr>
+                          @endwhile
+                      </tbody>
+                    </table>
+
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    function fetchCryptoPrices() {
+        $.get('/fetchCryptoPrices', function(data) {
+            // Handle the response here
+        });
+    }
+
+    // Fetch prices when the page loads
+    fetchCryptoPrices();
+
+    // Fetch prices every minute
+    setInterval(fetchCryptoPrices, 60000);
+});
+</script>
