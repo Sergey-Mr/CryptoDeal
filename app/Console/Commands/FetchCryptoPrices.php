@@ -49,8 +49,6 @@ class FetchCryptoPrices extends Command
             $this->error('Error: ' . $response->status());
         }
 
-        // Print the data to the console
-
         Cache::put('crypto_results', $result, 10); // Cache the data for 60 minutes
         Cache::put('crypto_prices', $prices, 10); // Cache the data for 60 minutes
 

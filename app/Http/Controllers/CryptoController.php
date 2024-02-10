@@ -12,6 +12,7 @@ class CryptoController extends Controller
     {
         Artisan::call('command:fetchCryptoPrices');
         $cryptocurrencies = Cache::get('crypto_results', []);
+    
         $prices = Cache::get('crypto_prices', []);
 
         //dd($cryptocurrencies); // Dump the contents of the cache

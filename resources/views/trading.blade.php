@@ -59,7 +59,7 @@
                       <tbody>
                       @php
                           $i = 0;
-                          $data = $cryptocurrencies['data'];
+                          $data = $cryptocurrencies['data'] ?? Cache::get('crypto_data', []);
                           $prices = $prices['data'];
                           $count = count($data);
                       @endphp
@@ -77,8 +77,8 @@
                               <td class="text-center">{{ $price['coin_price'] }}</td>
                               <td class="text-center">{{ $cryptocurrency['percent_change_24h'] }}%</td>
                               <td class="text-center">
-                                <button class="bg-green-500 text-white">Buy</button>
-                                <button class="bg-red-500 text-white">Sell</button>
+                                <a href="{{ route('buy', ['symbol' => $cryptocurrency['coin_symbol'], 'name' => $cryptocurrency['coin_name'], 'price' => $price['coin_price']]) }}" class="btn btn-success">Buy</a>
+                                <a href="{{ route('sell', ['symbol' => $cryptocurrency['coin_symbol'], 'name' => $cryptocurrency['coin_name'], 'price' => $price['coin_price']]) }}" class="btn btn-danger">Sell</a>
                               </td>
                           </tr>
                           @endwhile

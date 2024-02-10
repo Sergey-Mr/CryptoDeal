@@ -35,6 +35,12 @@ Route::get('/fetchCryptoPrices', function () {
     return response()->json(['success' => true]);
 });
 
+Route::post('/buy', function () {
+    return redirect()->route('trading');
+})->name('buy');
+
+Route::post('/sell', [PurchaseController::class, 'main'])->name('sell');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
