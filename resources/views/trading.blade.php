@@ -76,11 +76,10 @@
                               <td class="text-center">{{ $cryptocurrency['coin_name'] }}</td>
                               <td class="text-center">{{ $price['coin_price'] }}</td>
                               <td class="text-center">{{ $cryptocurrency['percent_change_24h'] }}%</td>
-                              <td class="text-center">
-                                <a href="{{ route('buy', ['symbol' => $cryptocurrency['coin_symbol'], 'name' => $cryptocurrency['coin_name'], 'price' => $price['coin_price']]) }}" class="btn btn-success">Buy</a>
-                                <a href="{{ route('sell', ['symbol' => $cryptocurrency['coin_symbol'], 'name' => $cryptocurrency['coin_name'], 'price' => $price['coin_price']]) }}" class="btn btn-danger">Sell</a>
+                              <td>
+                                   <a href="#" class = "btn btn-primary" data-toggle="modal" data-target="#ModalCreate">Buy</a>   
                               </td>
-                          </tr>
+                            </tr>
                           @endwhile
                       </tbody>
                     </table>
@@ -89,9 +88,12 @@
             </div>
         </div>
     </div>
+    
 </x-app-layout>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' type='text/javascript'></script>
+
 <script>
 $(document).ready(function() {
     function fetchCryptoPrices() {
@@ -106,4 +108,7 @@ $(document).ready(function() {
     // Fetch prices every minute
     setInterval(fetchCryptoPrices, 60000);
 });
+
+
+
 </script>

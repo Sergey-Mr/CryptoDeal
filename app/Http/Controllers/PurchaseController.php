@@ -12,7 +12,7 @@ class PurchaseController extends Controller
         $name = $request->input('name');
         $price = $request->input('price');
 
-        
+        return view('trading', compact('symbol', 'price', 'name'));
     }
 
     public function sell(Request $request)
@@ -20,6 +20,8 @@ class PurchaseController extends Controller
         $symbol = $request->input('symbol');
         $name = $request->input('name');
         $price = $request->input('price');
+
+        return view('trading', compact('symbol', 'price', 'name'));
 
     }
 }

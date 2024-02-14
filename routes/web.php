@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CryptoController;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\PurchaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,11 +36,9 @@ Route::get('/fetchCryptoPrices', function () {
     return response()->json(['success' => true]);
 });
 
-Route::post('/buy', function () {
-    return redirect()->route('trading');
-})->name('buy');
+Route::get('/buy', [PurchaseController::class, 'buy'])->name('buy');
 
-Route::post('/sell', [PurchaseController::class, 'main'])->name('sell');
+Route::get('/sell', [PurchaseController::class, 'sell'])->name('sell');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
