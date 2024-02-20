@@ -36,7 +36,10 @@ Route::get('/fetchCryptoPrices', function () {
     return response()->json(['success' => true]);
 });
 
-Route::get('/buy', [PurchaseController::class, 'buy'])->name('buy');
+Route::middleware(['auth'])->group(function () {
+    Route::post('/buy', [PurchaseController::class, 'buyView'])->name('buy.view');
+    // Add more buy routes here
+});
 
 Route::get('/sell', [PurchaseController::class, 'sell'])->name('sell');
 
