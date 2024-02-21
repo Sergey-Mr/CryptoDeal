@@ -21,6 +21,25 @@
         </x-secondary-button>
     </form>
 
+    <form method="GET" action="{{ route('buy.sell') }}">
+        @csrf
+        <input type="hidden" name="symbol" value="{{ $symbol }}">
+        <input type="hidden" name="name" value="{{ $name }}">
+        <input type="hidden" name="price" value="{{ $price }}">
+        <input type="hidden" id="sellQuantity" name="sellquantity" value="">
+        
+        @if ($userHasCurrency)
+        <x-secondary-button type="submit">
+            {{ __('Sell') }}
+        </x-secondary-button>
+        @else
+        <x-secondary-button type="submit" disabled>
+            {{ __('Sell') }}
+        </x-secondary-button>
+        @endif
+
+    </form>
+
 </x-app-layout>
 
 <script>
@@ -28,9 +47,19 @@
         var amount = document.getElementById('quantity').value;
         var estimatedPrice = amount * {{ $price }};
         console.log(estimatedPrice);
+        console.log('quantity:', document.querySelector('input[name="quantity"]').value);
         document.getElementById("estimate").innerHTML = "Estimated Price: " + estimatedPrice;
         document.getElementById("hiddenQuantity").value = amount;
+        document.getElementById("sellQuantity").value = amount;
+        //document.getElementById("hiddenQuantitySell").value = amount;
+    }
+    function logFormData() {
+        console.log('symbol:', document.querySelector('input[name="symbol"]').value);
+        console.log('name:', document.querySelector('input[name="name"]').value);
+        console.log('price:', document.querySelector('input[name="price"]').value);
+        console.log('quantity:', document.querySelector('input[name="quantity"]').value);
     }
     updateEstimate();
+    logFormData();
 
 </script>

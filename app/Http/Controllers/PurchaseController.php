@@ -14,7 +14,17 @@ class PurchaseController extends Controller
         $name = $request->input('name');
         $price = $request->input('price');
 
-        return view('buy', compact('symbol', 'price', 'name'));
+        $user = Auth::user();
+        $userHasCurrency = Purchase::where('user_id', $user->id)
+                                    ->where('symbol', $symbol)
+                                    ->exists();
+
+        return view('buy', [
+            'symbol' => $symbol,
+            'name' => $name,
+            'price' => $price,
+            'userHasCurrency' => $userHasCurrency,
+        ]);
     }
 
     public function purchase(Request $request)
@@ -23,7 +33,7 @@ class PurchaseController extends Controller
         $name = $request->input('name');
         $price = $request->input('price');
         $quantity = $request->input('quantity');
-        error_log(Auth::user()->balance);
+
         $totalCost = $price * $quantity;
 
         if (Auth::user()->balance <= $totalCost) {
@@ -53,9 +63,45 @@ class PurchaseController extends Controller
 
     public function sell(Request $request)
     {
+        $user = Auth::user();
         $symbol = $request->input('symbol');
         $name = $request->input('name');
         $price = $request->input('price');
+        $quantity = $request->input('quantity');
+
+        $totalCost = $price * $quantity;
+        $currencyQuantityUp = Purchase::where('user_id', $user->id)
+                        ->where('symbol', $symbol)
+                        ->where('operation', 1)
+                        ->sum('quantity');
+
+        $currencyQuantityDown = Purchase::where('user_id', $user->id)
+                            ->where('symbol', $symbol)
+                            ->where('operation', -1)
+                            ->sum('quantity');
+
+        $totalCurrency = $currencyQuantityUp - $currencyQuantityDown;
+
+        if ($totalCurrency < $quantity) {
+            return redirect()->route('buy.purchase')->with('error', 'Insufficient amount of currency');
+        }
+
+        else{
+            $purchase = new Purchase;
+            $purchase->user_id = Auth::user()->id;
+            $purchase->symbol = $symbol;
+            $purchase->name = $name;
+            $purchase->price_per_unit = $price;
+            $purchase->quantity = $quantity;
+            $purchase->total_cost = $totalCost;
+            $purchase->operation = -1;
+            $purchase->save();
+        
+            Auth::user()->balance += $totalCost;
+            Auth::user()->save();
+        
+            return redirect()->route('dashboard')->with('success', 'Purchase successful');
+        }
 
         return view('trading', compact('symbol', 'price', 'name'));
 

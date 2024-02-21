@@ -77,12 +77,12 @@
                               <td class="text-center">{{ $price['coin_price'] }}</td>
                               <td class="text-center">{{ $cryptocurrency['percent_change_24h'] }}%</td>
                               <td>
-                                <form method="POST" action="{{ route('buy.view') }}">
+                                <form class="text-center" method="POST" action="{{ route('buy.view') }}">
                                     @csrf
                                     <input type="hidden" name="symbol" value="{{ $cryptocurrency['coin_symbol'] }}">
                                     <input type="hidden" name="name" value="{{ $cryptocurrency['coin_name'] }}">
                                     <input type="hidden" name="price" value="{{ $price['coin_price'] }}">
-                                    <button type="submit" class="btn btn-primary">Buy</button>
+                                    <button type="submit" class="btn btn-primary">Open</button>
                                 </form>
                               </td>
                             </tr>
