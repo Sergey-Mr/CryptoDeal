@@ -23,7 +23,8 @@
                                 <thead>
                                     <tr>
                                         <th class="px-4 py-2">Currency</th>
-                                        <th class="px-4 py-2">Value (USD)</th>
+                                        <th class="px-4 py-2">Cost (USD)</th>
+                                        <th class="px-4 py-2">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody id="table-body">
@@ -46,11 +47,11 @@
     document.addEventListener('DOMContentLoaded', function () {
         // Define sampleData (this should be changed to the appropriate data from the database)
         var sampleData = [
-            { label: 'Bitcoin', value: 3000 },
-            { label: 'Ethereum', value: 2000 },
-            { label: 'Litecoin', value: 1500 },
-            { label: 'Ripple', value: 1200 },
-            { label: 'Stellar', value: 800 },
+            { label: 'Bitcoin', value: 3000, amount: 2 },
+            { label: 'Ethereum', value: 2000, amount: 1 },
+            { label: 'Litecoin', value: 1500, amount: 1 },
+            { label: 'Ripple', value: 1200, amount: 5 },
+            { label: 'Stellar', value: 800, amount: 5 },
         ];
 
         var totalValue = sampleData.reduce((acc, cur) => acc + cur.value, 0);
@@ -82,6 +83,7 @@
                 plugins: {
                     datalabels: {
                         color: 'white'
+                        // Doesn't make pie chart labels white, this will be fixed (not for MVP)
                     }
                 }
             }
@@ -93,6 +95,7 @@
             row.innerHTML = `
                 <td class="border px-4 py-2">${data.label}</td>
                 <td class="border px-4 py-2">${data.value}</td>
+                <td class="border px-4 py-2">${data.amount}</td>
             `;
             tableBody.appendChild(row);
         });
