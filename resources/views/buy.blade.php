@@ -66,7 +66,7 @@
             </script>
         </div>
     
-<<<<<<< HEAD
+
     <form method="GET" action="{{ route('buy.purchase') }}">
         @csrf
         <input type="hidden" name="symbol" value="{{ $symbol }}">
@@ -103,9 +103,9 @@
         @endif
 
     </form>
-=======
+
     </div>
->>>>>>> 5325f6c625a2fab305d8e2971257f35833da6b0f
+
 
 </x-app-layout>
 
@@ -117,12 +117,12 @@
         console.log('quantity:', document.querySelector('input[name="quantity"]').value);
         document.getElementById("estimate").innerHTML = "Estimated Price: " + estimatedPrice;
         document.getElementById("hiddenQuantity").value = amount;
-<<<<<<< HEAD
+
         //document.getElementById("hiddenQuantitySell").value = amount;
     
-=======
+
         document.getElementById("sellQuantity").value = amount;
->>>>>>> 5325f6c625a2fab305d8e2971257f35833da6b0f
+
     }
 
     function logFormData() {
@@ -138,13 +138,7 @@
 
 <style>
     @import url("https://fonts.googleapis.com/css?family=Open+Sans&dispaly=swap");
-    body {
-        max-width: 4000px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: white;
-        border-radius: 8px;
-    }
+
 
     form {
         margin-bottom: 20px;
