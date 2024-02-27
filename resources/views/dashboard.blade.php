@@ -11,7 +11,6 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("Current Balance: ") }} {{ number_format(Auth::user()->balance, 0, '', ' ') }} {{ __("USD") }}
 
-
                 </div>
             </div>
             
