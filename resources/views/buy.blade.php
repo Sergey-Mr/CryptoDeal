@@ -16,9 +16,15 @@
         <input type="hidden" name="price" value="{{ $price }}">
         <input type="hidden" id="hiddenQuantity" name="quantity" value="">
 
+        @if (Auth::user()->balance >= $price)
         <x-secondary-button type="submit">
                     {{ __('Buy') }}
         </x-secondary-button>
+        @else
+        <x-secondary-button type="submit" disabled>
+            {{ __('Buy') }}
+        </x-secondary-button>
+        @endif
     </form>
 
     <form method="GET" action="{{ route('buy.sell') }}">
@@ -26,7 +32,7 @@
         <input type="hidden" name="symbol" value="{{ $symbol }}">
         <input type="hidden" name="name" value="{{ $name }}">
         <input type="hidden" name="price" value="{{ $price }}">
-        <input type="hidden" id="sellQuantity" name="sellquantity" value="">
+        <input type="hidden" id="hiddenQuantity" name="quantity" value="">
         
         @if ($userHasCurrency)
         <x-secondary-button type="submit">
@@ -50,8 +56,8 @@
         console.log('quantity:', document.querySelector('input[name="quantity"]').value);
         document.getElementById("estimate").innerHTML = "Estimated Price: " + estimatedPrice;
         document.getElementById("hiddenQuantity").value = amount;
-        document.getElementById("sellQuantity").value = amount;
         //document.getElementById("hiddenQuantitySell").value = amount;
+    
     }
     function logFormData() {
         console.log('symbol:', document.querySelector('input[name="symbol"]').value);

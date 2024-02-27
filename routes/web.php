@@ -40,10 +40,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/buy', [PurchaseController::class, 'buyView'])->name('buy.view');
     Route::get('/buy/purchase', [PurchaseController::class, 'purchase'])->name('buy.purchase');
     Route::get('/buy/sell', [PurchaseController::class, 'sell'])->name('buy.sell');
-    // Add more buy routes here
+    
 });
 
-Route::get('/sell', [PurchaseController::class, 'sell'])->name('sell');
+//Route::get('/sell', [PurchaseController::class, 'sell'])->name('sell');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
