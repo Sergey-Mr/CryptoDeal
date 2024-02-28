@@ -7,24 +7,24 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
+            <div class="flex flex-row dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h3 class="text-lg font-semibold mb-4">{{ __("Current Balance") }}</h3>
                     <p class="text-xl">{{ number_format(Auth::user()->balance, 0, '', ' ') }} USD</p>
-
                 </div>
+                <div class="p-6 text-gray-900 dark:text-gray-100" id="total-assets"></div>
             </div>
-            
             <div class="dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h3 class="text-lg font-semibold mb-4">My Portfolio</h3>
                     <div class="flex flex-wrap overflow-hidden shadow-sm">
-                        <div class="w-1/4 p-4 flex flex-col items-center bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-lg">
+                        <div class="w-1/4 p-4 flex flex-col items-center bg-white dark:bg-gray-900 shadow-sm rounded-lg" style="overflow-x:auto;">
                             <table class="table-auto">
                                 <thead>
                                     <tr>
                                         <th class="px-4 py-2">Currency</th>
-                                        <th class="px-4 py-2">Cost (USD)</th>
+                                        <th class="px-4 py-2">Purchased (USD)</th>
+                                        <th class="px-4 py-2">Current (USD)</th>
                                         <th class="px-4 py-2">Amount</th>
                                     </tr>
                                 </thead>
@@ -37,7 +37,14 @@
                                 <canvas id="portfolio-chart" width="400" height="400"></canvas>
                             </div>
                         </div>
-                        
+                    </div>
+                </div>
+            </div>
+            <div class="dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6 mt-6">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <h3 class="text-lg font-semibold mb-4">History</h3>
+                    <div class="p-4 flex flex-col items-center bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-lg">
+                        <p>Lorem ipsum dolor</p>
                     </div>
                 </div>
             </div>
@@ -48,14 +55,20 @@
     document.addEventListener('DOMContentLoaded', function () {
         // Define sampleData (this should be changed to the appropriate data from the database)
         var sampleData = [
-            { label: 'Bitcoin', value: 3000, amount: 2 },
-            { label: 'Ethereum', value: 2000, amount: 1 },
-            { label: 'Litecoin', value: 1500, amount: 1 },
-            { label: 'Ripple', value: 1200, amount: 5 },
-            { label: 'Stellar', value: 800, amount: 5 },
+            { label: 'Bitcoin', purchased_value: 3000, current_value: 3000, amount: 2 },
+            { label: 'Ethereum', purchased_value: 2000, current_value: 2000, amount: 1 },
+            { label: 'Litecoin', purchased_value: 1500, current_value: 1500, amount: 1 },
+            { label: 'Ripple', purchased_value: 1200, current_value: 1200, amount: 5 },
+            { label: 'Stellar', purchased_value: 800, current_value: 800, amount: 5 },
         ];
 
-        var totalValue = sampleData.reduce((acc, cur) => acc + cur.value, 0);
+        // Temporary method of calculating total assets, to be replaced with actual data
+        var totalAssets = sampleData.reduce((acc, cur) => acc + cur.current_value, 0);
+        var totalAssetsSection = document.getElementById('total-assets');
+        totalAssetsSection.innerHTML = `
+            <h3 class="text-lg font-semibold mb-4">{{ __("Total Assets") }}</h3>
+            <p class="text-xl">${totalAssets} USD</p>
+        `;
 
         var ctx = document.getElementById('portfolio-chart').getContext('2d');
         var portfolioChart = new Chart(ctx, {
@@ -63,7 +76,7 @@
             data: {
                 labels: sampleData.map(data => data.label),
                 datasets: [{
-                    data: sampleData.map(data => data.value),
+                    data: sampleData.map(data => data.purchased_value),
                     backgroundColor: [
                         '#FF6384',
                         '#36A2EB',
@@ -80,12 +93,6 @@
                 maintainAspectRatio: false,
                 legend: {
                     display: false
-                },
-                plugins: {
-                    datalabels: {
-                        color: 'white'
-                        // Doesn't make pie chart labels white, this will be fixed (not for MVP)
-                    }
                 }
             }
         });
@@ -95,7 +102,8 @@
             var row = document.createElement('tr');
             row.innerHTML = `
                 <td class="border px-4 py-2">${data.label}</td>
-                <td class="border px-4 py-2">${data.value}</td>
+                <td class="border px-4 py-2">${data.purchased_value}</td>
+                <td class="border px-4 py-2">${data.current_value}</td>
                 <td class="border px-4 py-2">${data.amount}</td>
             `;
             tableBody.appendChild(row);
