@@ -101,7 +101,12 @@
         var data = [];
 
         //TODO: change value to one pulled from api
-        for (let i=0; i<AmountData.length;i++) {
+        // Create an array with values of the currencies at correspding indexs
+        // Then can easily add it to the dictionary below
+
+        //NOTE: data must be a list of dictionary items for the pie chart to work
+
+        for (let i=0; i<AmountData.length;i++) { 
             tempDict = {label: CurrencyData[i], value: 1, amount: AmountData[i]}
             data.push(tempDict)
         }
