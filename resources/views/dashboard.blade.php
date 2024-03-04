@@ -23,8 +23,8 @@
                                 <thead>
                                     <tr>
                                         <th class="px-4 py-2">Currency</th>
-                                        <th class="px-4 py-2">Purchased (USD)</th>
-                                        <th class="px-4 py-2">Current (USD)</th>
+                                        <th class="px-4 py-2">Purchased value (USD)</th>
+                                        <th class="px-4 py-2">Current value (USD)</th>
                                         <th class="px-4 py-2">Amount</th>
                                     </tr>
                                 </thead>
@@ -40,11 +40,11 @@
                     </div>
                 </div>
             </div>
-            <div class="dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6 mt-6">
+            <div class="dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mt-6">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h3 class="text-lg font-semibold mb-4">History</h3>
                     <div class="p-4 flex flex-col items-center bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-lg">
-                        <p>Lorem ipsum dolor</p>
+                        <canvas id="history-chart" style="width:100%;max-width:1000px"></canvas>
                     </div>
                 </div>
             </div>
@@ -70,8 +70,7 @@
             <p class="text-xl">${totalAssets} USD</p>
         `;
 
-        var ctx = document.getElementById('portfolio-chart').getContext('2d');
-        var portfolioChart = new Chart(ctx, {
+        var portfolioChart = new Chart("portfolio-chart", {
             type: 'pie',
             data: {
                 labels: sampleData.map(data => data.label),
@@ -94,6 +93,45 @@
                 legend: {
                     display: false
                 }
+            }
+        });
+        // Define historySampleData (this should be changed to the appropriate data from the database)
+        var historySampleData = [
+            { year: 2024, month: 01, day: 01, totalAssets: 8500 },
+            { year: 2024, month: 01, day: 10, totalAssets: 8512 },
+            { year: 2024, month: 01, day: 15, totalAssets: 8505 },
+            { year: 2024, month: 01, day: 17, totalAssets: 8496 },
+            { year: 2024, month: 01, day: 20, totalAssets: 8530 },
+            { year: 2024, month: 01, day: 28, totalAssets: 8643 },
+            { year: 2024, month: 02, day: 03, totalAssets: 8697 },
+            { year: 2024, month: 02, day: 04, totalAssets: 8704 }
+        ];
+
+        // Generates line chart using historySampleData
+        var historyChart = new Chart("history-chart", {
+            type: "line",
+            data: {
+                labels: historySampleData.map(data => data.day.toString() + "/" + data.month.toString() + "/" + data.year.toString()),
+                datasets: [{
+                    label: "Total Assets",
+                    data: historySampleData.map(data => data.totalAssets),
+                    backgroundColor: "rgba(255,255,255,1.0)",
+                    borderColor: "rgba(255,255,255,0.1)"
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        ticks: {
+                            // Adds dollar sign to cash values
+                            callback: function(value, index, ticks) {
+                                return '$' + value;
+                            }
+                        }
+                    }
+                },
+                // Removes the mouse click event, to ensure that the label is not interacative
+                events: ['mousemove','mouseout','touchstart','touchmove']
             }
         });
 
