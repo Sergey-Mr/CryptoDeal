@@ -57,6 +57,8 @@ class FetchCryptoPrices extends Command
         // Cache the data for 10 minutes
         //Cache::put('crypto_results', $result, 10); 
         //Cache::put('crypto_prices', $prices, 10); 
+
+        // If data present, update cache
         if ($response->successful()) {
             Cache::flush();
             Cache::forever('crypto_results', $result); 
