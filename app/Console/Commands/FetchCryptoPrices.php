@@ -28,31 +28,34 @@ class FetchCryptoPrices extends Command
      */
     public function handle()
     {
+        // API request to get the cryptocurrency data
         $response = Http::withHeaders([
             'QC-Access-Key' => 'YNES0LMM99FXSJ8N4NEO',
             'QC-Secret-Key' => 'Q9i9cbKHsD9oCJpzNFW8FLZkoQzNm2howiRF45EkuDviFKze',
         ])->get('https://quantifycrypto.com/api/v1/coins/percent-change');
 
+        // API request for the cryptocurrency prices
         $response2 = Http::withHeaders([
             'QC-Access-Key' => 'YNES0LMM99FXSJ8N4NEO',
             'QC-Secret-Key' => 'Q9i9cbKHsD9oCJpzNFW8FLZkoQzNm2howiRF45EkuDviFKze',
         ])->get('https://quantifycrypto.com/api/v1/coins/prices');
     
-        $result = json_decode($response->body(), true); // Decode the JSON string into an array
+        // Decode the JSON string into an array
+        $result = json_decode($response->body(), true); 
+        $result = $result['data'] ?? Cache::get('crypto_results', []);
 
-        $prices = json_decode($response2->body(), true); // Decode the JSON string into an array
+        $prices = json_decode($response2->body(), true);
+        $prices = $prices['data'] ?? Cache::get('crypto_prices', []);
 
-        if ($response->successful()) {
+        if ($response2->successful()) {
             $this->info(json_encode($result));
             $this->info(json_encode($prices));
         } else {
             $this->error('Error: ' . $response->status());
         }
 
-        Cache::put('crypto_results', $result, 10); // Cache the data for 60 minutes
-        Cache::put('crypto_prices', $prices, 10); // Cache the data for 60 minutes
-
-        //$this->info(print_r($result, true));
-        // Now $result contains the data from the API.
+        // Cache the data for 10 minutes
+        Cache::put('crypto_results', $result, 10); 
+        Cache::put('crypto_prices', $prices, 10); 
     }
 }

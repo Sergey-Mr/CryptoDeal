@@ -59,8 +59,8 @@
                       <tbody>
                       @php
                           $i = 0;
-                          $data = $cryptocurrencies['data'] ?? Cache::get('crypto_data', []);
-                          $prices = $prices['data'];
+                          $data = $cryptocurrencies ?? Cache::get('crypto_data', []);
+                          $prices = $prices ?? Cache::get('crypto_prices', []);
                           $count = count($data);
                       @endphp
 
