@@ -130,7 +130,12 @@
             data.push(tempDict)
         }
 
-        var totalValue = data.reduce((acc, cur) => acc + cur.value, 0);
+        var totalAssets = data.reduce((acc, cur) => acc + (cur.current_value * cur.amount), 0);
+        var totalAssetsSection = document.getElementById('total-assets');
+        totalAssetsSection.innerHTML = `
+            <h3 class="text-lg font-semibold mb-4">{{ __("Total Assets") }}</h3>
+            <p class="text-xl">${totalAssets} USD</p>
+        `;
 
         var ctx = document.getElementById('portfolio-chart').getContext('2d');
         var portfolioChart = new Chart(ctx, {
@@ -138,7 +143,7 @@
             data: {
                 labels: data.map(data => data.label),
                 datasets: [{
-                    data: data.map(data => data.value),
+                    data: data.map(data => data.value * data.amount),
                     //Generate colours based of number of currencies
                     //TODO: Can associate colours with a coin in the database
                     backgroundColor: [
