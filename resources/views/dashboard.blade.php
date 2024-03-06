@@ -60,34 +60,99 @@
     
     document.addEventListener('DOMContentLoaded', function () {
         // Define sampleData (this should be changed to the appropriate data from the database)
-        var sampleData = [
-            { label: 'Bitcoin', purchased_value: 3000, current_value: 3000, amount: 2 },
-            { label: 'Ethereum', purchased_value: 2000, current_value: 2000, amount: 1 },
-            { label: 'Litecoin', purchased_value: 1500, current_value: 1500, amount: 1 },
-            { label: 'Ripple', purchased_value: 1200, current_value: 1200, amount: 5 },
-            { label: 'Stellar', purchased_value: 800, current_value: 800, amount: 5 },
-        ];
+        //Pull data from database 
+        //send it to javascript using JSON then unpack and simplify repeated rows
 
-        // Temporary method of calculating total assets, to be replaced with actual data
-        var totalAssets = sampleData.reduce((acc, cur) => acc + cur.current_value, 0);
-        var totalAssetsSection = document.getElementById('total-assets');
-        totalAssetsSection.innerHTML = `
-            <h3 class="text-lg font-semibold mb-4">{{ __("Total Assets") }}</h3>
-            <p class="text-xl">${totalAssets} USD</p>
-        `;
+        @php
+        //Requests data from database
+        //Gets current user id 
+        //Probably should be done using username instead but couldn't figure it out
+        $userID = Auth::id();
+        $data = DB::table("users")->join("purchases", "users.id", "=", "purchases.user_id") -> where("users.id", "=", $userID)->select("purchases.name", "purchases.quantity", "purchases.operation")->get();
+        
+        //Splits the data into the currencies and how many of each currency there is
+        $currencies = $data -> pluck("name");
+        $values = $data -> pluck("quantity");
+        $operation = $data -> pluck("operation");
+        
+        // create a string to format to send to javascript
+        $returnString = "";
 
-        var portfolioChart = new Chart("portfolio-chart", {
+        for($i=0;$i<count($currencies);$i++){
+            if ($i==(count($currencies)-1)){ //if its the last one don't add a comma
+                $returnString = $returnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i];
+            } else {
+                $returnString = $returnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i] . ",";
+            }
+        }
+        @endphp
+        
+        //Get the data from the php
+        var dataSent = '<?= $returnString ?>';
+
+        //Format the data into an array
+        var dataSentArray = dataSent.split(",");
+
+        //Iterate through each element and split that into currency and amount
+        //Use a dictionary to simplify repeated occurrences
+        var dataDict = {};
+
+        for(let i=0; i<dataSentArray.length;i++){
+            var element = dataSentArray[i].split("|");
+            if (!(element[0] in dataDict) && !(element[1]==0)){
+                dataDict[element[0]] = 0;
+            }
+
+            if (!(element[1]==0)){
+                dataDict[element[0]] = dataDict[element[0]] + (parseInt(element[1]) * parseInt(element[2]));
+            }
+        }
+
+        //Split data insto currencies and amounts
+        var AmountData = Object.values(dataDict);
+        var CurrencyData = Object.keys(dataDict);
+        
+        var data = [];
+
+        //TODO: change value to one pulled from api
+        // Create an array with values of the currencies at correspding indexs
+        // Then can easily add it to the dictionary below
+
+        //NOTE: data must be a list of dictionary items for the pie chart to work
+
+        for (let i=0; i<AmountData.length;i++) { 
+            tempDict = {label: CurrencyData[i], value: 1, amount: AmountData[i]}
+            data.push(tempDict)
+        }
+
+        var totalValue = data.reduce((acc, cur) => acc + cur.value, 0);
+
+        var ctx = document.getElementById('portfolio-chart').getContext('2d');
+        var portfolioChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: sampleData.map(data => data.label),
+                labels: data.map(data => data.label),
                 datasets: [{
-                    data: sampleData.map(data => data.purchased_value),
+                    data: data.map(data => data.value),
+                    //Generate colours based of number of currencies
+                    //TODO: Can associate colours with a coin in the database
                     backgroundColor: [
-                        '#FF6384',
-                        '#36A2EB',
-                        '#FFCE56',
-                        '#4BC0C0',
-                        '#9966FF',
+                        '#003f5c',
+                        '#2f4b7c',
+                        '#665191',
+                        '#a05195',
+                        '#d45087',
+                        '#f95d6a',
+                        '#ff7c43',
+                        '#ffa600',
+
+                        // '#FF6384',
+                        // '#36A2EB',
+                        // '#FFCE56',
+                        // '#4BC0C0',
+                        // '#9966FF',
+                        // '#0066FF',
+                        // '#5566FF',
                         // Add more colors when needed
                     ],
                     borderWidth: 1
@@ -142,7 +207,7 @@
         });
 
         var tableBody = document.getElementById('table-body');
-        sampleData.forEach(function (data) {
+        data.forEach(function (data) {
             var row = document.createElement('tr');
             row.innerHTML = `
                 <td class="border px-4 py-2">${data.label}</td>
