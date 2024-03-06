@@ -15,8 +15,14 @@ class CryptoController extends Controller
     
         $prices = Cache::get('crypto_prices', []);
 
-        //dd($cryptocurrencies); // Dump the contents of the cache
-
         return view('trading', compact('cryptocurrencies', 'prices'));
+    }
+
+    public function dashboard()
+    {
+        Artisan::call('command:fetchCryptoPrices');
+    
+        $prices = Cache::get('crypto_prices', []);
+        return view('dashboard', compact('prices'));
     }
 }

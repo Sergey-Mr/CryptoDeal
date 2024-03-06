@@ -52,6 +52,12 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+    @php
+        // Current prices for all cryptocurrencies
+        $prices = $prices ?? Cache::get('crypto_prices', []);
+
+    @endphp
+    
     document.addEventListener('DOMContentLoaded', function () {
         // Define sampleData (this should be changed to the appropriate data from the database)
         var sampleData = [

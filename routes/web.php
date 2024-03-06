@@ -21,9 +21,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/trading', [CryptoController::class, 'index'])->middleware(['auth'])->name('trading');
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [CryptoController::class, 'dashboard'])->middleware(['auth'])->name('dashboard');
 //Route::get('/trading', function () {
 //    return view('trading');
 //})->middleware(['auth', 'verified'])->name('trading');
