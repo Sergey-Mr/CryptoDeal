@@ -101,14 +101,22 @@
 
         for(let i=0; i<dataSentArray.length;i++){
             var element = dataSentArray[i].split("|");
+            //If the value to add is zero don't add it to the dictionary or 
+            //if the coin is already in the dictionary
             if (!(element[0] in dataDict) && !(element[1]==0)){ 
                 dataDict[element[0]] = 0;
                 purchased_valueDict[element[0]] = 0;
             }
 
             if (!(element[1]==0)){
-                dataDict[element[0]] = dataDict[element[0]] + (parseInt(element[1]) * parseInt(element[2]));
-                purchased_valueDict[element[0]] = element[3]
+                if (dataDict[element[0]] + (parseInt(element[1]) * parseInt(element[2])) == 0){
+                    
+                    delete dataDict[element[0]];
+                    delete purchased_valueDict[element[0]];
+                } else {
+                    dataDict[element[0]] = dataDict[element[0]] + (parseInt(element[1]) * parseInt(element[2]));
+                    purchased_valueDict[element[0]] = element[3]
+                }
             }
         }
 
