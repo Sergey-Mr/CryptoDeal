@@ -55,20 +55,21 @@
         //Gets current user id 
         //Probably should be done using username instead but couldn't figure it out
         $userID = Auth::id();
-        $data = DB::table("users")->join("purchases", "users.id", "=", "purchases.user_id") -> where("users.id", "=", $userID)->select("purchases.name", "purchases.quantity")->get();
+        $data = DB::table("users")->join("purchases", "users.id", "=", "purchases.user_id") -> where("users.id", "=", $userID)->select("purchases.name", "purchases.quantity", "purchases.operation")->get();
         
         //Splits the data into the currencies and how many of each currency there is
         $currencies = $data -> pluck("name");
         $values = $data -> pluck("quantity");
+        $operation = $data -> pluck("operation");
         
         // create a string to format to send to javascript
         $returnString = "";
 
         for($i=0;$i<count($currencies);$i++){
             if ($i==(count($currencies)-1)){ //if its the last one don't add a comma
-                $returnString = $returnString . $currencies["".$i] . "|" . $values["".$i];
+                $returnString = $returnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i];
             } else {
-                $returnString = $returnString . $currencies["".$i] . "|" . $values["".$i] . ",";
+                $returnString = $returnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i] . ",";
             }
         }
         @endphp
@@ -90,11 +91,11 @@
             }
 
             if (!(element[1]==0)){
-                dataDict[element[0]] = dataDict[element[0]] + parseInt(element[1]);
+                dataDict[element[0]] = dataDict[element[0]] + (parseInt(element[1]) * parseInt(element[2]));
             }
         }
 
-        //Split data insto currnecies and amounts
+        //Split data insto currencies and amounts
         var AmountData = Object.values(dataDict);
         var CurrencyData = Object.keys(dataDict);
         
