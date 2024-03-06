@@ -68,21 +68,22 @@
         //Gets current user id 
         //Probably should be done using username instead but couldn't figure it out
         $userID = Auth::id();
-        $data = DB::table("users")->join("purchases", "users.id", "=", "purchases.user_id") -> where("users.id", "=", $userID)->select("purchases.name", "purchases.quantity", "purchases.operation")->get();
+        $data = DB::table("users")->join("purchases", "users.id", "=", "purchases.user_id") -> where("users.id", "=", $userID)->select("purchases.name", "purchases.quantity", "purchases.operation", "purchases.price_per_unit")->get();
         
         //Splits the data into the currencies and how many of each currency there is
         $currencies = $data -> pluck("name");
         $values = $data -> pluck("quantity");
         $operation = $data -> pluck("operation");
+        $purchased_price = $data -> pluck("price_per_unit");
         
         // create a string to format to send to javascript
         $returnString = "";
 
         for($i=0;$i<count($currencies);$i++){
             if ($i==(count($currencies)-1)){ //if its the last one don't add a comma
-                $returnString = $returnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i];
+                $returnString = $returnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i] . "|" . $purchased_price["".$i];
             } else {
-                $returnString = $returnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i] . ",";
+                $returnString = $returnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i] . "|" . $purchased_price["".$i] . ",";
             }
         }
         @endphp
@@ -96,21 +97,25 @@
         //Iterate through each element and split that into currency and amount
         //Use a dictionary to simplify repeated occurrences
         var dataDict = {};
+        var purchased_valueDict = {};
 
         for(let i=0; i<dataSentArray.length;i++){
             var element = dataSentArray[i].split("|");
             if (!(element[0] in dataDict) && !(element[1]==0)){
                 dataDict[element[0]] = 0;
+                purchased_valueDict[element[0]] = 0;
             }
 
             if (!(element[1]==0)){
                 dataDict[element[0]] = dataDict[element[0]] + (parseInt(element[1]) * parseInt(element[2]));
+                purchased_valueDict[element[0]] = element[3]
             }
         }
 
         //Split data insto currencies and amounts
         var AmountData = Object.values(dataDict);
         var CurrencyData = Object.keys(dataDict);
+        var purchased_valueData = Object.values(purchased_valueDict)
         
         var data = [];
 
@@ -121,7 +126,7 @@
         //NOTE: data must be a list of dictionary items for the pie chart to work
 
         for (let i=0; i<AmountData.length;i++) { 
-            tempDict = {label: CurrencyData[i], value: 1, amount: AmountData[i]}
+            tempDict = {label: CurrencyData[i], value: 1, amount: AmountData[i], purchased_value: purchased_valueData[i]}
             data.push(tempDict)
         }
 
@@ -212,7 +217,7 @@
             row.innerHTML = `
                 <td class="border px-4 py-2">${data.label}</td>
                 <td class="border px-4 py-2">${data.purchased_value}</td>
-                <td class="border px-4 py-2">${data.current_value}</td>
+                <td class="border px-4 py-2">${data.value}</td>
                 <td class="border px-4 py-2">${data.amount}</td>
             `;
             tableBody.appendChild(row);
