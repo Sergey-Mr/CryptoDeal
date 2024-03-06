@@ -101,7 +101,7 @@
 
         for(let i=0; i<dataSentArray.length;i++){
             var element = dataSentArray[i].split("|");
-            if (!(element[0] in dataDict) && !(element[1]==0)){
+            if (!(element[0] in dataDict) && !(element[1]==0)){ 
                 dataDict[element[0]] = 0;
                 purchased_valueDict[element[0]] = 0;
             }
@@ -115,7 +115,7 @@
         //Split data insto currencies and amounts
         var AmountData = Object.values(dataDict);
         var CurrencyData = Object.keys(dataDict);
-        var purchased_valueData = Object.values(purchased_valueDict)
+        var purchased_valueData = Object.values(purchased_valueDict); 
         
         var data = [];
 
