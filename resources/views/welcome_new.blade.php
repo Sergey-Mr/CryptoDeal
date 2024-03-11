@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
+<head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>CryptoDeal</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 
         <!-- Styles -->
         <style>
@@ -41,101 +41,206 @@
             </div>
             @endif
 
+
+            
+
             <div class="max-w-7xl mx-auto p-6 lg:p-8">
-                <!--
-                    1. Add the greeting "Unlock crypto market safely"
-                    2. Make it appear as if it is being typed
-                    3. Make a divider and Kanav`s "Our Services"
-                    4. Add reviews section
-                    5. Add reviews
-                    6. Make links to each section: leave login, register
-                    7. Add some more information to services
-
-                -->
                 <div class="mt-16">
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                        <div class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+                        <div class="scale-100 p-4 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex justify-center motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+                          
+                            <h2 class="text-xl font-semibold text-gray-900 dark:text-white text-center">Services Offered</h2>
+                          </div>
+                        </div>
+                      </div>
+
+                      <br></br>
+                    
+                                      
+                                   
+                      <div class="flex justify-center gap-6 lg:gap-8">
+                        <a class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+                            <div class="flex items-center justify-center rounded-full">
+                               
+                            </div>
                             <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <!--<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                                    </svg>-->
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7 stroke-red-500">
-                                        <polyline points="3 18 9 12 12 15 21 6"></polyline>
-                                    </svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Learn, test, grow</h2>
-
+                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Real time prices</h2>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7 stroke-red-500">
+                                    <polyline points="3 18 9 12 12 15 21 6"></polyline>
+                                </svg>
                                 <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    With CryptoDeal you get Real, Live prices of all Crypto-Currencies. This makes your simulation as realistic as possible and helps you learn useful trading skills.
+                                    On our website you get Real, Live prices of all Crypto-Currencies. This makes your simulation as realistic as possible and helps you learn useful trading skills.
                                 </p>
                             </div>
-
-                            <!--<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                            </svg>-->
-                        </div>
-
-                        <div class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a8.7 8.7 0 002.288-4.042 1.087 1.087 0 00-.358-1.099l-1.33-1.108c-.251-.21-.582-.299-.905-.245l-1.17.195a1.125 1.125 0 01-.98-.314l-.295-.295a1.125 1.125 0 010-1.591l.13-.132a1.125 1.125 0 011.3-.21l.603.302a.809.809 0 001.086-1.086L14.25 7.5l1.256-.837a4.5 4.5 0 001.528-1.732l.146-.292M6.115 5.19A9 9 0 1017.18 4.64M6.115 5.19A8.965 8.965 0 0112 3c1.929 0 3.716.607 5.18 1.64" />
-                                    </svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Accuracy</h2>
-
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    With CryptoDeal you get Real, Live prices of all Crypto-Currencies. This makes your simulation as realistic as possible and helps you learn useful trading skills.
-                                </p>
+                        </a>
+                    
+                        <a class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+                            <div class="flex items-center justify-center rounded-full">
+                                
                             </div>
-
-                        </div>
-
-                        <div class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
                             <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
-                                    </svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Trading news</h2>
-
+                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Upto date news</h2>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
+                                </svg>
                                 <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
                                     We provide breaking news on the economy, financial markets and more. This helps you make educated decisions regarding which Coin to buy based upon latest information.
                                 </p>
                             </div>
-                        </div>
-
-                        <div class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1.13em" height="1.5em" viewBox="0 0 288 512"><path fill="red" d="m209.2 233.4l-108-31.6C88.7 198.2 80 186.5 80 173.5c0-16.3 13.2-29.5 29.5-29.5h66.3c12.2 0 24.2 3.7 34.2 10.5c6.1 4.1 14.3 3.1 19.5-2l34.8-34c7.1-6.9 6.1-18.4-1.8-24.5C238 74.8 207.4 64.1 176 64V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48h-2.5C45.8 64-5.4 118.7.5 183.6c4.2 46.1 39.4 83.6 83.8 96.6l102.5 30c12.5 3.7 21.2 15.3 21.2 28.3c0 16.3-13.2 29.5-29.5 29.5h-66.3C100 368 88 364.3 78 357.5c-6.1-4.1-14.3-3.1-19.5 2l-34.8 34c-7.1 6.9-6.1 18.4 1.8 24.5c24.5 19.2 55.1 29.9 86.5 30v48c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-48.2c46.6-.9 90.3-28.6 105.7-72.7c21.5-61.6-14.6-124.8-72.5-141.7"/></svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Range of cryptocurrencies</h2>
-
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    CryptoDeal has a support of more than 500 cryptoccurencies. This gives you control over your investing style and lets you try lots of different currencies before you enter the market.
-                                </p>
+                        </a>
+                    
+                  
+                        <a class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+                            <div class="flex items-center justify-center rounded-full">
                                 
                             </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!--<div class="flex justify-center mt-16 px-0 sm:items-center sm:justify-between">
-
-                    <div class="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-                    </div>
-                </div>-->
+                            <div>
+                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Large Range of Crypto-Currencies</h2>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
+                                        <text x="50%" y="60%" text-anchor="middle" stroke="none" fill="red" font-size="20px" font-weight="bold">$</text>
+                                    </svg>
+                                    
+                                    
+                                </svg>
+                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                                    We have a large range of Crypto-Currencies from popular coins like Bitcoin to less popular coins like Doge. This gives you control over your investing style and lets you try lots of different currencies before you enter the market.
+            
+                               
+                                
+                                </p>
+                            </div>
+                        </a>
+            </div>
+            </div> 
+            </div>  
+            
+              
+            <div class="max-w-7xl mx-auto p-6 lg:p-8">
+    <div class="mt-16">
+        
+            
+                <h2 class="text-xl font-semibold text-gray-900 dark:text-white text-center">Reviews</h2>
             </div>
         </div>
+    </div>
+</div>
+
+
+
+
+        
+                        <div class="flex justify-center gap-6 lg:gap-8">
+    
+            <a  class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+                <div>
+                    <div class="image">
+                        <img src="images/anonymous.png" alt="Anonymous" style="width: 100px; height: 100px; border-radius: 50%;">
+                    </div>
+
+                    <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Anonymous</h2>
+
+                    <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                   The crypto simulator's real-time prices, up-to-date news and the extensive coin options. was great for someone just starting out.</p>
+                   
+    <div class="stars">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>``
+    </div>
+    
+
+
+
+                </div>
+            </a>
+  
+     
+
+            <a  class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+                <div>
+                    <div class="image">
+                        <img src="images/anonymous.png" alt="Anonymous" style="width: 100px; height: 100px; border-radius: 50%;">
+                    </div>
+
+                    <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Anonymous</h2>
+
+                    <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                      The website is user friendly and I really liked the news section,it gave me relevant financial news and helped me make well informed investment decisions.
+                    </p>
+                   
+    <div class="stars">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+ 
+    </div>
+    
+
+
+
+                </div>
+            </a>
+
+     
+        
+
+            <a  class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+                <div>
+                    <div class="image">
+                        <img src="images/anonymous.png" alt="Anonymous" style="width: 100px; height: 100px; border-radius: 50%;">
+                    </div>
+
+                    <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Anonymous</h2>
+
+
+                    <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+
+                    Great user interface, One can easily track their stock portfolio, look at crypto prices for various coin and more.
+                    </p>
+                   
+    <div class="stars">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>``
+    </div>
+    
+
+
+
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
     </body>
+
+
+
+
+<footer>
+<script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script>
+ <div class="livecoinwatch-widget-5" lcw-base="USD" lcw-color-tx="#999999" lcw-marquee-1="coins" lcw-marquee-2="coins" lcw-marquee-items="10" ></div>
+</footer>
 </html>
+
+
+
+
+<style>
+        .stars {
+            color: gold;
+            margin-top: 20px;
+        }
+
+    
+
+    </style> 
