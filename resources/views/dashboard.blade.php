@@ -55,7 +55,7 @@
     @php
         // Current prices for all cryptocurrencies
         $prices = $prices ?? Cache::get('crypto_prices', []);
-
+        
     @endphp
     
     document.addEventListener('DOMContentLoaded', function () {
