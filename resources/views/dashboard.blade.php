@@ -67,12 +67,9 @@
                 $currentreturnString = $currentreturnString . $prices["".$i]["coin_name"] . "|" . $prices["".$i]["coin_price"] . ",";
             }
         }
-
     @endphp
     
     document.addEventListener('DOMContentLoaded', function () {
-        // Define sampleData (this should be changed to the appropriate data from the database)
-        //Pull data from database 
         //send it to javascript using JSON then unpack and simplify repeated rows
 
         @php
@@ -100,7 +97,21 @@
         }
         @endphp
         
-        //Get the data from the php
+        //Get the current price data from php
+        var currentPriceData = '<?= $currentreturnString ?>';
+
+        //Split the data into an array
+        var currentPriceDataArray = currentPriceData.split(",");
+
+        //Create an array for access usning currency names
+        var currentPricesDict = {};
+
+        for(let i=0; i<currentPriceDataArray.length; i++){
+            var element = currentPriceDataArray[i].split("|");
+            currentPricesDict[element[0]] = element[1];
+        }
+
+        //Get the data from the php for the user
         var dataSent = '<?= $userreturnString ?>';
 
         //Format the data into an array
@@ -139,14 +150,13 @@
         
         var data = [];
 
-        //TODO: change value to one pulled from api
         // Create an array with values of the currencies at correspding indexs
         // Then can easily add it to the dictionary below
 
         //NOTE: data must be a list of dictionary items for the pie chart to work
 
         for (let i=0; i<AmountData.length;i++) { 
-            tempDict = {label: CurrencyData[i], value: 1, amount: AmountData[i], purchased_value: purchased_valueData[i]}
+            tempDict = {label: CurrencyData[i], value: currentPricesDict[CurrencyData[i]], amount: AmountData[i], purchased_value: purchased_valueData[i]}
             data.push(tempDict)
         }
 
