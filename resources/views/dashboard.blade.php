@@ -55,7 +55,19 @@
     @php
         // Current prices for all cryptocurrencies
         $prices = $prices ?? Cache::get('crypto_prices', []);
-        
+
+        //Create a return string for the current prices
+        $currentreturnString = "";
+
+        //iterate through and at coin name and coin price
+        for($i=0;$i<count($prices);$i++){
+            if ($i==(count($prices)-1)){ //if its the last one don't add a comma
+                $currentreturnString = $currentreturnString . $prices["".$i]["coin_name"] . "|" . $prices["".$i]["coin_price"] ;
+            } else {
+                $currentreturnString = $currentreturnString . $prices["".$i]["coin_name"] . "|" . $prices["".$i]["coin_price"] . ",";
+            }
+        }
+
     @endphp
     
     document.addEventListener('DOMContentLoaded', function () {
@@ -77,19 +89,19 @@
         $purchased_price = $data -> pluck("price_per_unit");
         
         // create a string to format to send to javascript
-        $returnString = "";
+        $userreturnString = "";
 
         for($i=0;$i<count($currencies);$i++){
             if ($i==(count($currencies)-1)){ //if its the last one don't add a comma
-                $returnString = $returnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i] . "|" . $purchased_price["".$i];
+                $userreturnString = $userreturnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i] . "|" . $purchased_price["".$i];
             } else {
-                $returnString = $returnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i] . "|" . $purchased_price["".$i] . ",";
+                $userreturnString = $userreturnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i] . "|" . $purchased_price["".$i] . ",";
             }
         }
         @endphp
         
         //Get the data from the php
-        var dataSent = '<?= $returnString ?>';
+        var dataSent = '<?= $userreturnString ?>';
 
         //Format the data into an array
         var dataSentArray = dataSent.split(",");
