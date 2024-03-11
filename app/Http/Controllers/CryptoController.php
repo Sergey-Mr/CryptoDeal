@@ -21,8 +21,8 @@ class CryptoController extends Controller
     public function dashboard()
     {
         Artisan::call('command:fetchCryptoPrices');
-    
         $prices = Cache::get('crypto_prices', []);
+
         return view('dashboard', compact('prices'));
     }
 }

@@ -47,6 +47,16 @@ class FetchCryptoPrices extends Command
         $prices = json_decode($response2->body(), true);
         $prices = $prices['data'] ?? Cache::get('crypto_prices', []);
 
+        // Get coin name into $prices
+        foreach ($prices as $priceKey => $price) {
+            foreach ($result as $res) {
+                if ($res['coin_symbol'] == $price['coin_symbol']) {
+                    $prices[$priceKey]['coin_name'] = $res['coin_name'];
+                    break;
+                }
+            }
+        }
+
         if ($response2->successful()) {
             $this->info(json_encode($result));
             $this->info(json_encode($prices));
