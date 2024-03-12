@@ -57,17 +57,15 @@
             @php
                 $client = new \GuzzleHttp\Client();
 
-                $response = $client->request('GET', 'https://coingecko.p.rapidapi.com/coins/markets?vs_currency=usd&page=1&per_page=100&order=market_cap_desc', [
-                    'headers' => [
-                        'X-RapidAPI-Host' => 'coingecko.p.rapidapi.com',
-                        'X-RapidAPI-Key' => 'a474e2c060msh8b015b215042a13p1a74fbjsn61f549aae3c6',
-                    ],
+                $response = $client->request('GET', 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd', [
+                  'headers' => [
+                    'x-cg-pro-api-key' => 'CG-rUzJ3iaAmq91nbQPLEYuzyvn',
+                  ],
                 ]);
-            
+
                 $body = $response->getBody();
                 $data = json_decode($body, true);
-                $coinId = null;
-            
+
                 //Get id of the current coin
                 foreach ($data as $coin) {
                     if ($coin['name'] == $name) {
@@ -75,20 +73,15 @@
                         break;
                     }
                 }
-            
-                //Get historical data on the currency
-                if ($coinId != null){
-                    $response = $client->request('GET', 'https://coingecko.p.rapidapi.com/coins/' . $coinId . '/market_chart?vs_currency=usd&days=30', [
-                    	'headers' => [
-                    		'X-RapidAPI-Host' => 'coingecko.p.rapidapi.com',
-                    		'X-RapidAPI-Key' => 'a474e2c060msh8b015b215042a13p1a74fbjsn61f549aae3c6',
-                    	],
-                    ]);
+
+                $response = $client->request('GET', 'https://api.coingecko.com/api/v3/coins/' . $coinId . '/market_chart?vs_currency=usd&days=30', [
+                  'headers' => [
+                    'x-cg-pro-api-key' => 'CG-rUzJ3iaAmq91nbQPLEYuzyvn',
+                  ],
+                ]);
                 
-                    $body = $response->getBody();
-                    $historicalData = json_decode($body, true);
-                    //dd($historicalData);
-                }
+                $body = $response->getBody();
+                $historicalData = json_decode($body, true);
             
             @endphp
 
