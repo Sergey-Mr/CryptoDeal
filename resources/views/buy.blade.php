@@ -53,49 +53,39 @@
             </div>
         </div>
         <div class="graph">
-            <!-- Graph -->
-            @php
-                $client = new \GuzzleHttp\Client();
-
-                $response = $client->request('GET', 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd', [
-                  'headers' => [
-                    'x-cg-pro-api-key' => 'CG-rUzJ3iaAmq91nbQPLEYuzyvn',
-                  ],
-                ]);
-
-                $body = $response->getBody();
-                $data = json_decode($body, true);
-
-                //Get id of the current coin
-                foreach ($data as $coin) {
-                    if ($coin['name'] == $name) {
-                        $coinId = $coin['id'];
-                        break;
-                    }
-                }
-
-                $response = $client->request('GET', 'https://api.coingecko.com/api/v3/coins/' . $coinId . '/market_chart?vs_currency=usd&days=30', [
-                  'headers' => [
-                    'x-cg-pro-api-key' => 'CG-rUzJ3iaAmq91nbQPLEYuzyvn',
-                  ],
-                ]);
-                
-                $body = $response->getBody();
-                $historicalData = json_decode($body, true);
-            
-            @endphp
 
             <div class="dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mt-6">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h3 class="text-lg font-semibold mb-4">{{ $name }} graph:</h3>
-                    <select id="timeframe" class="btn btn-primary">
-                        <option value="today">Today</option>
-                        <option value="week">Week</option>
-                        <option value="month">Month</option>
-                    </select>
-                    <div class="p-4 flex flex-col items-center bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-lg">
-                        <canvas id="history-chart" style="width:100%;max-width:1000px"></canvas>
+                    <div class="p-4 flex flex-col items-center bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-lg" style="height:700px;">
+                        <!-- TradingView Widget BEGIN -->
+                        <div class="tradingview-widget-container" style="height:100%;width:100%">
+                          <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                          <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
+                          @php
+                            $symbol = $symbol . 'USD';
+                          @endphp
+                          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                        
+                          {
+                          "autosize": true,
+                          "symbol": "{{ $symbol }}",
+                          "interval": "D",
+                          "timezone": "Etc/UTC",
+                          "theme": "dark",
+                          "style": "1",
+                          "locale": "en",
+                          "enable_publishing": false,
+                          "allow_symbol_change": true,
+                          "calendar": false,
+                          "support_host": "https://www.tradingview.com"
+                        }
+                          </script>
+                          
+                        </div>
+                        <!-- TradingView Widget END -->
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -119,40 +109,6 @@
 
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    document.getElementById('timeframe').onchange = function() {
-        var timeframe = this.value;
-    };
-
-    // Generates line chart using historySampleData
-    var historicalData = @json($historicalData);
-    var historyChart = new Chart("history-chart", {
-            type: "line",
-            data: {
-                labels: historicalData['prices'].map(data => new Date(data[0]).toLocaleDateString()),
-                datasets: [{
-                    label: "Price change",
-                    data: historicalData['prices'].map(data => data[1]),
-                    backgroundColor: "rgba(255,255,255,1.0)",
-                    borderColor: "rgba(255,255,255,0.1)"
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        ticks: {
-                            // Adds dollar sign to cash values
-                            callback: function(value, index, ticks) {
-                                return '$' + value;
-                            }
-                        }
-                    }
-                },
-                // Removes the mouse click event, to ensure that the label is not interacative
-                events: ['mousemove','mouseout','touchstart','touchmove']
-            }
-        });
-</script>
 
 <style>
     #timeframe {

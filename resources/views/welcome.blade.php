@@ -160,7 +160,7 @@
 
 <script>
 var i = 0;
-var txt = 'Unlock crypto market safely';
+var txt = 'Unlock the crypto market safely';
 var speed = 70;
 
 function typeWriter() {
