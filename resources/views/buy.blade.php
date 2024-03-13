@@ -62,11 +62,14 @@
                         <div class="tradingview-widget-container" style="height:100%;width:100%">
                           <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
                           <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
+                          @php
+                            $symbol = $symbol . 'USD';
+                          @endphp
                           <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                         
                           {
                           "autosize": true,
-                          "symbol": "NASDAQ:AAPL",
+                          "symbol": "{{ $symbol }}",
                           "interval": "D",
                           "timezone": "Etc/UTC",
                           "theme": "dark",
