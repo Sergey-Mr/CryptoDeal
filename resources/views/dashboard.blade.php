@@ -79,12 +79,16 @@
         //Probably should be done using username instead but couldn't figure it out
         $userID = Auth::id();
         $data = DB::table("users")->join("purchases", "users.id", "=", "purchases.user_id") -> where("users.id", "=", $userID)->select("purchases.name", "purchases.quantity", "purchases.operation", "purchases.price_per_unit")->get();
-        
+
         //Splits the data into the currencies and how many of each currency there is
         $currencies = $data -> pluck("name");
         $values = $data -> pluck("quantity");
         $operation = $data -> pluck("operation");
         $purchased_price = $data -> pluck("price_per_unit");
+
+        //Get user current cash balance
+        $cash = DB::table("users") -> where("users.id", "=", $userID) -> select("balance") -> get();
+        $cash = $cash -> pluck("balance");
         
         // create a string to format to send to javascript
         $userreturnString = "";
@@ -97,6 +101,10 @@
             }
         }
         @endphp
+        //get cash value from php
+        var cash = '<?= $cash ?>';
+        //Trim the brackets that come with the string
+        cash = parseInt(cash.substring(1, cash.length-1));
         
         //Get the current price data from php
         var currentPriceData = '<?= $currentreturnString ?>';
@@ -159,13 +167,18 @@
         for (let i=0; i<AmountData.length;i++) { 
             tempDict = {label: CurrencyData[i], value: currentPricesDict[CurrencyData[i]], amount: AmountData[i], purchased_value: purchased_valueData[i]}
             data.push(tempDict)
+            //Add value to total assest
+            cash += currentPricesDict[CurrencyData[i]] * AmountData[i];
         }
 
-        var totalAssets = data.reduce((acc, cur) => acc + (cur.current_value * cur.amount), 0);
+        //Getting the value to two decimal places at most
+        cash = Math.round(cash * 100) / 100
+
+
         var totalAssetsSection = document.getElementById('total-assets');
         totalAssetsSection.innerHTML = `
             <h3 class="text-lg font-semibold mb-4">{{ __("Total Assets") }}</h3>
-            <p class="text-xl">${totalAssets} USD</p>
+            <p class="text-xl">${cash} USD</p>
         `;
 
         var ctx = document.getElementById('portfolio-chart').getContext('2d');
