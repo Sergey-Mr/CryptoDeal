@@ -28,6 +28,7 @@
                                         <th class="px-4 py-2">Purchased value (USD)</th>
                                         <th class="px-4 py-2">Current value (USD)</th>
                                         <th class="px-4 py-2">Amount</th>
+                                        <th class="px-4 py-2">Growth (%)</th>
                                     </tr>
                                 </thead>
                                 <tbody id="table-body">
@@ -166,7 +167,18 @@
         //NOTE: data must be a list of dictionary items for the pie chart to work
 
         for (let i=0; i<AmountData.length;i++) { 
-            tempDict = {label: CurrencyData[i], value: currentPricesDict[CurrencyData[i]], amount: AmountData[i], purchased_value: purchased_valueData[i]}
+            var value = parseFloat(currentPricesDict[CurrencyData[i]]).toFixed(4);
+            var purchased_value = parseFloat(purchased_valueData[i]).toFixed(4);
+            var growth = value * 100 / purchased_value;
+            if (growth > 100) {
+                growth = growth - 100;
+                growth = growth.toFixed(4);
+            } else {
+                growth = 100 - growth;
+                growth = growth.toFixed(4);
+            }
+
+            tempDict = {label: CurrencyData[i], value: value, amount: AmountData[i], purchased_value: purchased_value, growth: growth}
             data.push(tempDict)
             //Add value to total assest
             cash += currentPricesDict[CurrencyData[i]] * AmountData[i];
@@ -184,7 +196,8 @@
 
         // Calculate the percentage of total assets from 100
         var cashPercent = cash * 100 / 100000;
-        // Calculate the difference from 100
+        
+        // Calculate the percentage growth
         if (cashPercent > 100) {
             var percentDifference = cashPercent - 100;
             var percentSection = document.getElementById('percent-change');
@@ -284,11 +297,26 @@
         var tableBody = document.getElementById('table-body');
         data.forEach(function (data) {
             var row = document.createElement('tr');
+            // Format growth value
+            var growth = data.growth;
+            var color = growth >= 0 ? 'green' : 'red';
+            var sign = growth >= 0 ? '+' : '';
+            var row = document.createElement('tr');
+
             row.innerHTML = `
-                <td class="border px-4 py-2">${data.label}</td>
+                <td class="border px-4 py-2">
+                    <form method="POST" action="{{ route('buy.view') }}">
+                        @csrf
+                        <input type="hidden" name="symbol" value="${data.label}">
+                        <input type="hidden" name="name" value="${data.label}">
+                        <input type="hidden" name="price" value="${data.value}">
+                        <button type="submit" class="btn btn-link" style="text-decoration: underline; ">${data.label}</button>
+                    </form>
+                </td>
                 <td class="border px-4 py-2">${data.purchased_value}</td>
                 <td class="border px-4 py-2">${data.value}</td>
                 <td class="border px-4 py-2">${data.amount}</td>
+                <td class="border px-4 py-2" style="color: ${color};">${sign}${growth}</td>
             `;
             tableBody.appendChild(row);
         });
