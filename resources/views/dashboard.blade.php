@@ -14,6 +14,7 @@
                     <p class="text-xl">{{ number_format(Auth::user()->balance, 0, '', ' ') }} USD</p>
                 </div>
                 <div class="p-6 text-gray-900 dark:text-gray-100" id="total-assets"></div>
+                <div class="p-6 text-gray-900 dark:text-gray-100" id="percent-change"></div>
             </div>
             <div class="dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
@@ -180,6 +181,26 @@
             <h3 class="text-lg font-semibold mb-4">{{ __("Total Assets") }}</h3>
             <p class="text-xl">${cash} USD</p>
         `;
+
+        // Calculate the percentage of total assets from 100
+        var cashPercent = cash * 100 / 100000;
+        // Calculate the difference from 100
+        if (cashPercent > 100) {
+            var percentDifference = cashPercent - 100;
+            var percentSection = document.getElementById('percent-change');
+            percentSection.innerHTML = `
+                <h3 class="text-lg font-semibold mb-4">{{ __("Growth") }}</h3>
+                <p class="text-xl" style="color: green;">+${percentDifference.toFixed(3)} %</p>
+            `;
+        } else {
+            var percentDifference = 100 - cashPercent;
+            var percentSection = document.getElementById('percent-change');
+            percentSection.innerHTML = `
+                <h3 class="text-lg font-semibold mb-4">{{ __("Growth") }}</h3>
+                <p class="text-xl" style="color: red;">-${percentDifference.toFixed(3)} %</p>
+            `;
+        }
+        
 
         var ctx = document.getElementById('portfolio-chart').getContext('2d');
         var portfolioChart = new Chart(ctx, {
