@@ -19,11 +19,22 @@ class PurchaseController extends Controller
                                     ->where('symbol', $symbol)
                                     ->exists();
 
+        $userCurrencyAmount = 0;
+        if ($userHasCurrency) {
+            $userCurrencyAmount = Purchase::where('user_id', $user->id)
+                                           ->where('symbol', $symbol)
+                                           ->get()
+                                           ->sum(function($purchase) {
+                                               return $purchase->quantity * $purchase->operation;
+                                           });
+        }
+        
         return view('buy', [
             'symbol' => $symbol,
             'name' => $name,
             'price' => $price,
             'userHasCurrency' => $userHasCurrency,
+            'userCurrencyAmount' => $userCurrencyAmount,
         ]);
     }
 

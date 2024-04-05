@@ -2,12 +2,21 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Buy: ') }} {{ $symbol}} - {{ $name }} - {{ $price }}
+
         </h2>
+
+       
     </x-slot>
 
     <div class = "container">
-        <div class="operational-field">
+        <div class="operational-field" style="display: flex; flex-direction: column; align-items: center; margin-top: 2%;">
             <!-- Your operational field goes here -->
+            @if ($userHasCurrency)
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight" style="margin-bottom: 3%;">
+                    {{ __('You own: ') }} {{ $userCurrencyAmount }}
+                </h2>
+        
+            @endif
             <label for="quantity" id="amount" style="color: white">Quantity:</label>
             <input type="number" id="quantity" name="quantity" min="1" default ="1" oninput="updateEstimate()">
             <p id="estimate" style="color: grey"></p>
@@ -50,7 +59,11 @@
                     </x-secondary-button>
                     @endif
                 </form>
+
             </div>
+            <x-secondary-button  id="set-amount" type="button" class="btn btn-primary" style="margin-top: 4%;">
+                Sell all
+            </x-secondary-button >
         </div>
         <div class="graph">
 
@@ -139,3 +152,10 @@
     }
 
 </style>
+
+<script>
+    document.getElementById('set-amount').addEventListener('click', function() {
+        document.getElementById('quantity').value = {{ $userCurrencyAmount }};
+        document.getElementById('hiddenQuantity2').value = {{ $userCurrencyAmount }};
+    });
+</script>
