@@ -55,6 +55,7 @@
 
     <style>
          .card {
+            position: relative;
             border-width: 5px;
             border-style: solid;
             border-color: #e2e8f0; 
@@ -82,6 +83,10 @@
             border: none; 
             border-radius: 15px; 
             cursor: pointer;
+        }
+
+        .card-title {
+            font-size: 20px; /* adjust as needed */
         }
     </style>
 </x-app-layout>
