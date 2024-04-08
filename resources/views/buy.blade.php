@@ -64,6 +64,61 @@
             <x-secondary-button  id="set-amount" type="button" class="btn btn-primary" style="margin-top: 4%;">
                 Sell all
             </x-secondary-button >
+
+            <div class="transactions">
+                <div class="dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mt-6">
+                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                        <h2 class="text-lg font-semibold mb-4"><b>History: </b></h2>
+                        @php
+                            $currentDay = null;
+                        @endphp
+
+                        @foreach ($purchases as $purchase)
+                            @php
+                                $dayOfPurchase = $purchase->created_at->format('Y-m-d');
+                            @endphp
+
+                            @if ($dayOfPurchase != $currentDay)
+                                @if ($currentDay != null)
+                                    </div> <!-- Close the previous day's div -->
+                                @endif
+                                <hr>
+                                <div class="day"> <!-- Start a new day's div -->
+                                <h3><b><i>{{ $purchase->created_at->format('F j, Y') }}</i></b></h3>
+                                @php
+                                    $currentDay = $dayOfPurchase;
+                                @endphp
+                            @endif
+                            <hr class="dashed">
+                            <div class="transaction">
+                                <p style="color: rgb(175, 175, 175)">Time: {{ $purchase->created_at->format('H:i:s') }}</p>
+                                <p style="color: rgb(175, 175, 175)">Quantity: {{ $purchase->quantity }}</p>
+                                @if ($purchase->quantity == 1)
+                                    <p><b>Price: {{ number_format($purchase->price_per_unit, 3, '.', ' ') }}</b></p>
+                                @else
+                                    <p>Price: {{ number_format($purchase->price_per_unit, 3, '.', ' ') }}</p>
+                                @endif
+
+                                @if ($purchase->operation == 1)
+                                    <p style="color: green">Operation: Buy</p>
+                                @else
+                                    <p style="color: red">Operation: Sell</p>
+                                @endif
+
+                                @if ($purchase->quantity > 1)
+                                    <p><b>Total cost: {{ number_format($purchase->total_cost, 3, '.', ' ') }}<b></p>
+                                @endif
+                            </div>
+                        @endforeach
+
+                        @if ($currentDay != null)
+                            </div> <!-- Close the last day's div -->
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+
         </div>
         <div class="graph">
 
@@ -150,6 +205,32 @@
         display: flex;
         gap: 10px; /* Adjust this to change the space between the buy and sell buttons */
     }
+
+    .transactions {
+        width: 100%; 
+        padding-left: 12%; 
+        padding-right: 12%; 
+    }
+
+    hr.dashed {
+        border-top: 1px dashed;
+        border-bottom: none;
+    }
+
+    /*hr.gradient {
+      height: 3px;
+      border: none;
+      border-radius: 6px;
+      background: linear-gradient(
+        90deg,
+        rgba(147, 31, 242) 0%, 
+        rgba(197, 66, 245) 21%,
+        rgba(237, 0, 229) 51%,
+        rgba(232, 5, 190) 100%
+        rgba(187, 0, 255) 0%,
+        rgba(253, 193, 324) 100%
+      );
+    }*/
 
 </style>
 

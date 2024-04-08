@@ -28,6 +28,12 @@ class PurchaseController extends Controller
                                                return $purchase->quantity * $purchase->operation;
                                            });
         }
+
+        // Show all transactions for the given currency
+        $purchases = Purchase::where('user_id', auth()->id())
+                     ->where('symbol', $symbol)
+                     ->orderBy('created_at', 'desc')
+                     ->get();
         
         return view('buy', [
             'symbol' => $symbol,
@@ -35,6 +41,7 @@ class PurchaseController extends Controller
             'price' => $price,
             'userHasCurrency' => $userHasCurrency,
             'userCurrencyAmount' => $userCurrencyAmount,
+            'purchases' => $purchases
         ]);
     }
 
