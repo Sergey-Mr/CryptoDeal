@@ -45,9 +45,64 @@
             </div>
             <div class="dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mt-6">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <h3 class="text-lg font-semibold mb-4">History</h3>
+                    <h3 class="text-lg font-semibold mb-4">History graph: </h3>
                     <div class="p-4 flex flex-col items-center bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-lg">
                         <canvas id="history-chart" style="width:100%;max-width:1000px"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="transactions">
+                <div class="dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mt-6">
+                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                        <h2 class="text-lg font-semibold mb-4"><b>History: </b></h2>
+                        @php
+                            $currentDay = null;
+                        @endphp
+
+                        @foreach ($purchases_hisotry as $purchase)
+                            @php
+                                $dayOfPurchase = $purchase->created_at->format('Y-m-d');
+                            @endphp
+
+                            @if ($dayOfPurchase != $currentDay)
+                                @if ($currentDay != null)
+                                    </div> <!-- Close the previous day's div -->
+                                @endif
+                                <hr>
+                                <div class="day"> <!-- Start a new day's div -->
+                                <h3><b><i>{{ $purchase->created_at->format('F j, Y') }}</i></b></h3>
+                                @php
+                                    $currentDay = $dayOfPurchase;
+                                @endphp
+                            @endif
+                            <hr class="dashed">
+                            <div class="transaction">
+                                <p style="color: rgb(175, 175, 175)">Time: {{ $purchase->created_at->format('H:i:s') }}</p>
+                                <p style="color: rgb(175, 175, 175)">Quantity: {{ $purchase->quantity }}</p>
+                                @if ($purchase->quantity == 1)
+                                    <p><b>Price: {{ number_format($purchase->price_per_unit, 3, '.', ' ') }}</b></p>
+                                @else
+                                    <p>Price: {{ number_format($purchase->price_per_unit, 3, '.', ' ') }}</p>
+                                @endif
+
+                                @if ($purchase->operation == 1)
+                                    <p style="color: green">Operation: Buy</p>
+                                @else
+                                    <p style="color: red">Operation: Sell</p>
+                                @endif
+
+                                @if ($purchase->quantity > 1)
+                                    <p><b>Total cost: {{ number_format($purchase->total_cost, 3, '.', ' ') }}<b></p>
+                                @endif
+                            </div>
+                        @endforeach
+
+                        {{ $purchases_hisotry->links() }}
+
+                        @if ($currentDay != null)
+                            </div> <!-- Close the last day's div -->
+                        @endif
                     </div>
                 </div>
             </div>
