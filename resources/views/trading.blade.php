@@ -22,7 +22,7 @@
                       </button>
                   </x-slot>
                   <x-slot name="content">
-                      <x-dropdown-link :href="route('profile.edit')">
+                      <x-dropdown-link :href="route('trading.price.ascending')">
                         Price Acsending
                       </x-dropdown-link>
                       <x-dropdown-link :href="route('profile.edit')">

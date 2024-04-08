@@ -21,6 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/trading', [CryptoController::class, 'index'])->middleware(['auth'])->name('trading');
+Route::get('/trading-price-ascending', [CryptoController::class, 'indexSortPriceAscending'])->middleware(['auth'])->name('trading.price.ascending');
 //Route::get('/dashboard', function () {
 //    return view('dashboard');
 //})->middleware(['auth', 'verified'])->name('dashboard');
