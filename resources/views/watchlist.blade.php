@@ -17,6 +17,7 @@
                             <th class="px-4 py-2">Saved Price</th>
                             <th class="px-4 py-2">Current Price</th>
                             <th class="px-4 py-2">Percentage Change</th>
+                            <th class="px-4 py-2">Remove</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,6 +32,15 @@
                                 @else
                                     <td class="border px-4 py-2" style="color: red;">{{ $item->percentage_change }}%</td>
                                 @endif
+                                <td class="border px-4 py-2 text-center">
+                                    <form class="text-center" method="POST" action="{{ route('save') }}">
+                                        @csrf
+                                        <input type="hidden" name="symbol" value="{{ $item->symbol }}">
+                                        <input type="hidden" name="name" value="{{ $item->name }}">
+                                        <input type="hidden" name="price" value="{{ $item->price_saved }}">
+                                        <button type="submit" class="btn btn-link" style="text-decoration: underline; ">Remove</button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
