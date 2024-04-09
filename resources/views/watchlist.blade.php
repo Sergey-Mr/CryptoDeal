@@ -23,7 +23,17 @@
                     <tbody>
                         @foreach ($watchlist as $item)
                             <tr>
-                                <td class="border px-4 py-2">{{ $item->symbol }}</td>
+                                <td class="border px-4 py-2">
+                                    <form class="text-center" method="POST" action="{{ route('buy.view') }}">
+                                        @csrf
+                                        <input type="hidden" name="symbol" value="{{ $item->symbol }}">
+                                        <input type="hidden" name="name" value="{{ $item->name }}">
+                                        <input type="hidden" name="price" value="{{ $item->price_saved }}">
+                                        <button type="submit" class="btn btn-link" style="text-decoration: underline; ">{{ $item->symbol }}</button>
+                                    </form>
+
+                                </td>
+
                                 <td class="border px-4 py-2">{{ $item->name }}</td>
                                 <td class="border px-4 py-2">{{ $item->price_saved }}</td>
                                 <td class="border px-4 py-2">{{ $item->current_price }}</td>
