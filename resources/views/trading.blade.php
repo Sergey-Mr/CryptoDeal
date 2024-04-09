@@ -48,6 +48,7 @@
                               <th>Name</th>
                               <th>Current Price</th>
                               <th>Percent Change 24h</th>
+                              <th>Favourite</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -87,6 +88,17 @@
                                   @else
                                       <span class="text-danger" style="color: red;">{{ $cryptocurrency['percent_change_24h'] }}%</span>
                                   @endif
+                              </td>
+                              <td class="text-center">
+                                <form class="text-center" method="POST" action="{{ route('save') }}">
+                                    @csrf
+                                    <!--<td class="text-center">{{ $cryptocurrency['coin_symbol'] }}</td>-->
+                                    <input type="hidden" name="symbol" value="{{ $cryptocurrency['coin_symbol'] }}">
+                                    <input type="hidden" name="name" value="{{ $cryptocurrency['coin_name'] }}">
+                                    <input type="hidden" name="price" value="{{ $price['coin_price'] }}">
+                                    <button type="submit" class="btn btn-link" style="text-decoration: underline; ">Save</button>
+                                </form>
+
                               </td>
                               
                             </tr>

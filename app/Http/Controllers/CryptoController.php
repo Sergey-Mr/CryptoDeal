@@ -33,6 +33,10 @@ class CryptoController extends Controller
         return view('dashboard', compact('prices', 'purchases', 'purchases_hisotry'));
     }
 
+    public function watchlist(){
+        return view('watchlist');
+    }
+
     public function indexSortPriceAscending()
     {
         Artisan::call('command:fetchCryptoPrices');
