@@ -9,6 +9,32 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100" id="news-container">
+                <table class="table-auto w-full">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2">Symbol</th>
+                            <th class="px-4 py-2">Name</th>
+                            <th class="px-4 py-2">Saved Price</th>
+                            <th class="px-4 py-2">Current Price</th>
+                            <th class="px-4 py-2">Percentage Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($watchlist as $item)
+                            <tr>
+                                <td class="border px-4 py-2">{{ $item->symbol }}</td>
+                                <td class="border px-4 py-2">{{ $item->name }}</td>
+                                <td class="border px-4 py-2">{{ $item->price_saved }}</td>
+                                <td class="border px-4 py-2">{{ $item->current_price }}</td>
+                                @if ($item->percentage_change > 0)
+                                    <td class="border px-4 py-2" style="color: green;">{{ $item->percentage_change }}%</td>
+                                @else
+                                    <td class="border px-4 py-2" style="color: red;">{{ $item->percentage_change }}%</td>
+                                @endif
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
                 </div>
             </div>
         </div>

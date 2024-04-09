@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use App\Models\Cryptocurrency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Artisan;
@@ -34,7 +36,30 @@ class CryptoController extends Controller
     }
 
     public function watchlist(){
-        return view('watchlist');
+        $userId = Auth::user()->id;
+        $watchlist = Cryptocurrency::where('user_id', $userId)->get();
+
+        // Get the current price of the currency
+        Artisan::call('command:fetchCryptoPrices');
+        $prices = Cache::get('crypto_prices', []);
+
+        // Fetch current prices and calculate percentage change
+        foreach ($watchlist as $item) {
+            $currentPrice = null;
+            foreach ($prices as $price) {
+                if ($price['coin_symbol'] == $item->symbol) {
+                    $currentPrice = $price['coin_price'];
+                    break;
+                }
+            }
+
+            if ($currentPrice !== null) {
+                $item->current_price = $currentPrice;
+                $item->percentage_change = number_format((($currentPrice - $item->price_saved) / $item->price_saved) * 100, 4);
+            }
+        }
+
+        return view('watchlist', compact('watchlist'));
     }
 
     public function indexSortPriceAscending()
