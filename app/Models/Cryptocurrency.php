@@ -9,6 +9,8 @@ class Cryptocurrency extends Model
 {
     use HasFactory;
 
+    protected $table = 'watchlist';
+
     protected $fillable = [
         'user_id',
         'symbol',

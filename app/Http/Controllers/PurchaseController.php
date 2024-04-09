@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Purchase;
+use App\Models\Cryptocurrency;
 
 class PurchaseController extends Controller
 {
@@ -123,6 +124,23 @@ class PurchaseController extends Controller
 
         return view('trading', compact('symbol', 'price', 'name'));
 
+    }
+
+    public function save(Request $request)
+    {
+        $symbol = $request->input('symbol');
+        $name = $request->input('name');
+        $price = $request->input('price');
+
+        $watchlistEntry = new Cryptocurrency;
+        $watchlistEntry->user_id = Auth::user()->id;
+        $watchlistEntry->symbol = $symbol;
+        $watchlistEntry->name = $name;
+        $watchlistEntry->price_saved = $price;
+
+        $watchlistEntry->save();
+
+        return redirect()->route('trading')->with('success', 'Saved to watchlist');
     }
 }
 
