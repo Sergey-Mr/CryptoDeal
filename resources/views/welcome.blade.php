@@ -43,7 +43,7 @@
             </div>
             @endif
 
-            <div class="max-w-7xl mx-auto p-8 lg:p-10" style="margin-top: 5%;">
+            <div class="max-w-7xl mx-auto p-8 lg:p-10" style="margin-top: 10%;">
                 <!--
                     + 1. Add the greeting "Unlock crypto market safely"
                     + 2. Make it appear as if it is being typed
@@ -65,13 +65,29 @@
 
                 </div>
 
-                <div class="text-center mt-16 mb-16">
-                    <h1 class="text-4xl font-bold" style="color:white;">$$$</h1>
-                    <h2 class="text-2xl font-bold" style="color:white; font-size: 1rem;">Why CryptoDeal?</h2>
+                <div data-aos="fade" data-aos-duration="1000" data-aos-delay="50" data-aos-easing="ease-in-out" class="text-center mb-8 " style="margin-top:15rem;">
+                    <h1 class="text-2xl font-bold" style="color:white; font-size: 3rem;">Why CryptoDeal?</h1>
                 </div>
 
-                <div class="mt-16">
-                    
+                <div class="mt-16" style="margin-bottom:16px">
+                    <!-- add a fifth box that contains a brief overview of the features of CryptoDeal and test welcome on different screen sizes -->
+                    <div style="margin-bottom:2rem;" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="50" data-aos-easing="ease-in-out" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+                        <div>
+                            <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
+                            <svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='rgb(50, 50, 50)' fill='none' opacity='0'/>
+                            <g transform="matrix(0.4 0 0 0.4 12 12)" >
+                            <path class="stroke-red-500"style="stroke-width: 3; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" translate(-25.25, -24.47)" d="M 8 0.083984375 L 7.1894531 2.1875 L 6.0136719 5.2382812 L 0.49804688 5.5351562 L 4.7851562 9.0175781 L 3.3652344 14.353516 L 8 11.353516 L 12.636719 14.351562 L 11.214844 9.0175781 L 15.501953 5.5351562 L 9.9882812 5.2382812 L 8 0.083984375 z M 8 4.9140625 L 8.7714844 6.9121094 L 10.908203 7.0273438 L 9.2460938 8.3769531 L 9.796875 10.445312 L 8 9.2832031 L 6.203125 10.447266 L 6.7539062 8.3769531 L 5.0917969 7.0273438 L 7.2304688 6.9121094 L 8 4.9140625 z M 20 6.0175781 L 20 7.9824219 L 50 7.9824219 L 50 6.0175781 L 20 6.0175781 z M 8 17.583984 L 7.1894531 19.6875 L 6.0136719 22.738281 L 0.49804688 23.035156 L 4.7851562 26.517578 L 3.3652344 31.853516 L 8 28.853516 L 12.636719 31.851562 L 11.214844 26.517578 L 15.501953 23.035156 L 9.9882812 22.738281 L 8 17.583984 z M 8 22.414062 L 8.7714844 24.412109 L 10.908203 24.527344 L 9.2460938 25.876953 L 9.796875 27.945312 L 8 26.783203 L 6.203125 27.947266 L 6.7539062 25.876953 L 5.0917969 24.527344 L 7.2304688 24.412109 L 8 22.414062 z M 20 24.017578 L 20 25.982422 L 50 25.982422 L 50 24.017578 L 20 24.017578 z M 8 34.583984 L 7.1894531 36.6875 L 6.0136719 39.738281 L 0.49804688 40.035156 L 4.7851562 43.517578 L 3.3652344 48.853516 L 8 45.853516 L 12.636719 48.851562 L 11.214844 43.517578 L 15.501953 40.035156 L 9.9882812 39.738281 L 8 34.583984 z M 8 39.414062 L 8.7714844 41.412109 L 10.908203 41.527344 L 9.2460938 42.876953 L 9.796875 44.945312 L 8 43.783203 L 6.203125 44.947266 L 6.7539062 42.876953 L 5.0917969 41.527344 L 7.2304688 41.412109 L 8 39.414062 z M 20 42.017578 L 20 43.982422 L 50 43.982422 L 50 42.017578 L 20 42.017578 z" stroke-linecap="round" />
+                            </g>
+                            </svg>
+                            </div>
+
+                            <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Advanced features</h2>
+
+                            <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                            CryptoDeal includes a dynamic dashboard for real-time portfolio updates and statistics. Users benefit from breaking news on the economy and financial markets, aiding informed decision-making. Furthermore CryptoDeal offers a simplistic currency watchlist page for intuitive trading.
+                            </p>
+                        </div>
+                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                         <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="50" data-aos-easing="ease-in-out" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
                             <div>
@@ -87,7 +103,7 @@
                                 <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Learn, test, grow</h2>
 
                                 <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    With CryptoDeal you get Real, Live prices of all Crypto-Currencies. This makes your simulation as realistic as possible and helps you learn useful trading skills.
+                                By honing their skills in an ever-changing market environment, users gain invaluable experience. CryptoDeal empowers users to evolve and adapt confidently within the cryptocurrency landscape.
                                 </p>
                             </div>
 
@@ -132,7 +148,7 @@
                         <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="50" data-aos-easing="ease-in-out" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
                             <div>
                                 <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1.13em" height="1.5em" viewBox="0 0 288 512"><path fill="red" d="m209.2 233.4l-108-31.6C88.7 198.2 80 186.5 80 173.5c0-16.3 13.2-29.5 29.5-29.5h66.3c12.2 0 24.2 3.7 34.2 10.5c6.1 4.1 14.3 3.1 19.5-2l34.8-34c7.1-6.9 6.1-18.4-1.8-24.5C238 74.8 207.4 64.1 176 64V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48h-2.5C45.8 64-5.4 118.7.5 183.6c4.2 46.1 39.4 83.6 83.8 96.6l102.5 30c12.5 3.7 21.2 15.3 21.2 28.3c0 16.3-13.2 29.5-29.5 29.5h-66.3C100 368 88 364.3 78 357.5c-6.1-4.1-14.3-3.1-19.5 2l-34.8 34c-7.1 6.9-6.1 18.4 1.8 24.5c24.5 19.2 55.1 29.9 86.5 30v48c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-48.2c46.6-.9 90.3-28.6 105.7-72.7c21.5-61.6-14.6-124.8-72.5-141.7"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1.13em" height="1.5em" viewBox="0 0 288 512"><path fill="rgb(239, 68, 68)" d="m209.2 233.4l-108-31.6C88.7 198.2 80 186.5 80 173.5c0-16.3 13.2-29.5 29.5-29.5h66.3c12.2 0 24.2 3.7 34.2 10.5c6.1 4.1 14.3 3.1 19.5-2l34.8-34c7.1-6.9 6.1-18.4-1.8-24.5C238 74.8 207.4 64.1 176 64V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48h-2.5C45.8 64-5.4 118.7.5 183.6c4.2 46.1 39.4 83.6 83.8 96.6l102.5 30c12.5 3.7 21.2 15.3 21.2 28.3c0 16.3-13.2 29.5-29.5 29.5h-66.3C100 368 88 364.3 78 357.5c-6.1-4.1-14.3-3.1-19.5 2l-34.8 34c-7.1 6.9-6.1 18.4 1.8 24.5c24.5 19.2 55.1 29.9 86.5 30v48c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-48.2c46.6-.9 90.3-28.6 105.7-72.7c21.5-61.6-14.6-124.8-72.5-141.7"/></svg>
                                 </div>
 
                                 <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Range of cryptocurrencies</h2>
