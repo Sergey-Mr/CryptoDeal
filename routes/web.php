@@ -33,6 +33,8 @@ Route::get('/news', function () {
     return view('news');
 })->middleware(['auth', 'verified'])->name('news');
 
+Route::get('/watchlist', [CryptoController::class, 'watchlist'])->middleware(['auth'])->name('watchlist');
+
 Route::get('/fetchCryptoPrices', function () {
     Artisan::call('command:fetchCryptoPrices');
     return response()->json(['success' => true]);
@@ -42,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/buy', [PurchaseController::class, 'buyView'])->name('buy.view');
     Route::get('/buy/purchase', [PurchaseController::class, 'purchase'])->name('buy.purchase');
     Route::get('/buy/sell', [PurchaseController::class, 'sell'])->name('buy.sell');
+    Route::post('/save', [PurchaseController::class, 'save'])->name('save');
     
 });
 

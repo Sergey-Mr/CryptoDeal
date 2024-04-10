@@ -126,13 +126,13 @@
             }
         }
     @endphp
-    
+
     document.addEventListener('DOMContentLoaded', function () {
         //send it to javascript using JSON then unpack and simplify repeated rows
 
         @php
         //Requests data from database
-        //Gets current user id 
+        //Gets current user id
         //Probably should be done using username instead but couldn't figure it out
         $userID = Auth::id();
         $data = DB::table("users")->join("purchases", "users.id", "=", "purchases.user_id") -> where("users.id", "=", $userID)->select("purchases.name", "purchases.quantity", "purchases.operation", "purchases.price_per_unit", "purchases.symbol")->get();
@@ -147,7 +147,7 @@
         //Get user current cash balance
         $cash = DB::table("users") -> where("users.id", "=", $userID) -> select("balance") -> get();
         $cash = $cash -> pluck("balance");
-        
+
         // create a string to format to send to javascript
         $userreturnString = "";
 
@@ -164,7 +164,7 @@
         var cash = '<?= $cash ?>';
         //Trim the brackets that come with the string
         cash = parseInt(cash.substring(1, cash.length-1));
-        
+
         //Get the current price data from php
         var currentPriceData = '<?= $currentreturnString ?>';
 
@@ -193,9 +193,9 @@
 
         for(let i=0; i<dataSentArray.length;i++){
             var element = dataSentArray[i].split("|");
-            //If the value to add is zero don't add it to the dictionary or 
+            //If the value to add is zero don't add it to the dictionary or
             //if the coin is already in the dictionary
-            if (!(element[0] in dataDict) && !(element[1]==0)){ 
+            if (!(element[0] in dataDict) && !(element[1]==0)){
                 dataDict[element[0]] = 0;
                 purchased_valueDict[element[0]] = 0;
                 symbolDict[element[0]] = element[4];
@@ -203,7 +203,7 @@
 
             if (!(element[1]==0)){
                 if (dataDict[element[0]] + (parseInt(element[1]) * parseInt(element[2])) == 0){
-                    
+
                     delete dataDict[element[0]];
                     delete purchased_valueDict[element[0]];
                     delete symbolDict[element[0]];
@@ -217,7 +217,7 @@
         //Split data insto currencies and amounts
         var AmountData = Object.values(dataDict);
         var CurrencyData = Object.keys(dataDict);
-        var purchased_valueData = Object.values(purchased_valueDict); 
+        var purchased_valueData = Object.values(purchased_valueDict);
         var SymbolData = Object.values(symbolDict);
 
         var data = [];
@@ -227,7 +227,7 @@
 
         //NOTE: data must be a list of dictionary items for the pie chart to work
 
-        for (let i=0; i<AmountData.length;i++) { 
+        for (let i=0; i<AmountData.length;i++) {
             var value = parseFloat(currentPricesDict[CurrencyData[i]]).toFixed(4);
             var purchased_value = parseFloat(purchased_valueData[i]).toFixed(4);
             var growth = value * 100 / purchased_value;
@@ -257,7 +257,7 @@
 
         // Calculate the percentage of total assets from 100
         var cashPercent = cash * 100 / 100000;
-        
+
         // Calculate the percentage growth
         if (cashPercent > 100) {
             var percentDifference = cashPercent - 100;
@@ -274,7 +274,7 @@
                 <p class="text-xl" style="color: red;">-${percentDifference.toFixed(3)} %</p>
             `;
         }
-        
+
 
         var ctx = document.getElementById('portfolio-chart').getContext('2d');
         var portfolioChart = new Chart(ctx, {

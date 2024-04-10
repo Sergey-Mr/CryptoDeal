@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Purchase;
+use App\Models\Cryptocurrency;
 
 class PurchaseController extends Controller
 {
@@ -123,6 +124,37 @@ class PurchaseController extends Controller
 
         return view('trading', compact('symbol', 'price', 'name'));
 
+    }
+
+    public function save(Request $request)
+    {
+        $userId = Auth::user()->id;
+        $symbol = $request->input('symbol');
+        $name = $request->input('name');
+        $price = $request->input('price');
+
+        $watchlistEntry = Cryptocurrency::where([
+            'user_id' => $userId,
+            'symbol' => $symbol,
+            'name' => $name,
+        ])->first();
+
+        if ($watchlistEntry) {
+            // Entry exists, so delete it
+            $watchlistEntry->delete();
+            $message = 'Removed from watchlist';
+        } else {
+            // Entry does not exist, so create it
+            $watchlistEntry = new Cryptocurrency;
+            $watchlistEntry->user_id = $userId;
+            $watchlistEntry->symbol = $symbol;
+            $watchlistEntry->name = $name;
+            $watchlistEntry->price_saved = $price;
+            $watchlistEntry->save();
+            $message = 'Saved to watchlist';
+        }
+
+        return redirect()->route('trading')->with('success', $message);
     }
 }
 
