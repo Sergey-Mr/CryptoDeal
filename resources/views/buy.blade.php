@@ -61,10 +61,12 @@
                 </form>
 
             </div>
+
             <x-secondary-button  id="set-amount" type="button" class="btn btn-primary" style="margin-top: 4%;">
                 Sell all
             </x-secondary-button >
 
+        
             <div class="transactions">
                 <div class="dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mt-6">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
@@ -117,15 +119,13 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
-        <div class="graph">
-
-            <div class="dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mt-6">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            
+        <div class="graph" style="width: 1480px;">
+            <div class="dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg" style="width: 100%;">
+                <div class="p-6 text-gray-900 dark:text-gray-100" style="width: 100%;">
                     <h3 class="text-lg font-semibold mb-4">{{ $name }} graph:</h3>
-                    <div class="p-4 flex flex-col items-center bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-lg" style="height:700px;">
+                    <div class="p-4 flex flex-col items-center bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-lg" style="height:700px; width: 100%;">
                         <!-- TradingView Widget BEGIN -->
                         <div class="tradingview-widget-container" style="height:100%;width:100%">
                           <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
@@ -135,8 +135,8 @@
                           @endphp
                           <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                         
-                          {
-                          "autosize": true,
+                        {
+                          "autosize": false,
                           "symbol": "{{ $symbol }}",
                           "interval": "D",
                           "timezone": "Etc/UTC",
@@ -144,7 +144,7 @@
                           "style": "1",
                           "locale": "en",
                           "enable_publishing": false,
-                          "allow_symbol_change": true,
+                          "allow_symbol_change": false,
                           "calendar": false,
                           "support_host": "https://www.tradingview.com"
                         }
@@ -157,6 +157,7 @@
                 </div>
             </div>
         </div>
+
     </div>
     
     

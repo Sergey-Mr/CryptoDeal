@@ -20,7 +20,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h3 class="text-lg font-semibold mb-4">My Portfolio</h3>
                     <div class="flex flex-wrap overflow-hidden shadow-sm">
-                        <div class="w-1/4 p-4 flex flex-col items-center bg-white dark:bg-gray-900 shadow-sm rounded-lg" style="overflow-x:auto;">
+                        <div class="w-2/3 p-4 flex flex-col items-center bg-white dark:bg-gray-900 shadow-sm rounded-lg" style="overflow-x:auto;">
                             <table class="table-auto">
                                 <thead>
                                     <tr>
@@ -28,6 +28,7 @@
                                         <th class="px-4 py-2">Purchased value (USD)</th>
                                         <th class="px-4 py-2">Current value (USD)</th>
                                         <th class="px-4 py-2">Amount</th>
+                                        <th class="px-4 py-2">Value</th>
                                         <th class="px-4 py-2">Growth (%)</th>
                                     </tr>
                                 </thead>
@@ -35,7 +36,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="w-3/4 p-4 lg:w-2/3 bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-lg" style="margin-left:0.5rem;">
+                        <div class="w-1/3 p-4 lg:w-2/3 bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-lg" style="margin-left:0.5rem;">
                             <div class="flex justify-center">
                                 <canvas id="portfolio-chart" width="400" height="400"></canvas>
                             </div>
@@ -356,8 +357,8 @@
             var row = document.createElement('tr');
             // Format growth value
             var growth = data.growth;
-            var color = growth >= 0 ? 'green' : 'red';
-            var sign = growth >= 0 ? '+' : '';
+            var color = data.purchased_value <= data.value ? 'green' : 'red';
+            var sign = data.purchased_value <= data.value  ? '+' : '-';
             var row = document.createElement('tr');
 
             row.innerHTML = `
@@ -373,6 +374,7 @@
                 <td class="border px-4 py-2">${data.purchased_value}</td>
                 <td class="border px-4 py-2">${data.value}</td>
                 <td class="border px-4 py-2">${data.amount}</td>
+                <td class="border px-4 py-2">${(data.amount * data.purchased_value).toLocaleString('en-US')} $</td>
                 <td class="border px-4 py-2" style="color: ${color};">${sign}${growth}</td>
             `;
             tableBody.appendChild(row);
