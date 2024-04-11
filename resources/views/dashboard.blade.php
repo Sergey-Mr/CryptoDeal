@@ -136,14 +136,14 @@
         //Gets current user id
         //Probably should be done using username instead but couldn't figure it out
         $userID = Auth::id();
-        $data = DB::table("users")->join("purchases", "users.id", "=", "purchases.user_id") -> where("users.id", "=", $userID)->select("purchases.name", "purchases.quantity", "purchases.operation", "purchases.price_per_unit", "purchases.created_at")->get();
+        $data = DB::table("users")->join("purchases", "users.id", "=", "purchases.user_id") -> where("users.id", "=", $userID)->select("purchases.name", "purchases.quantity", "purchases.operation", "purchases.price_per_unit", "purchases.symbol")->get();
 
         //Splits the data into the currencies and how many of each currency there is
         $currencies = $data -> pluck("name");
         $values = $data -> pluck("quantity");
         $operation = $data -> pluck("operation");
         $purchased_price = $data -> pluck("price_per_unit");
-        $purchased_date = $data -> pluck("created_at"); //Format: "YYYY-MM-DD HH-MM-SS"
+        $symbols = $data -> pluck("symbol");
 
         //Get user current cash balance
         $cash = DB::table("users") -> where("users.id", "=", $userID) -> select("balance") -> get();
@@ -154,9 +154,9 @@
 
         for($i=0;$i<count($currencies);$i++){
             if ($i==(count($currencies)-1)){ //if its the last one don't add a comma
-                $userreturnString = $userreturnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i] . "|" . $purchased_price["".$i] . "|" . $purchased_date["".$i];
+                $userreturnString = $userreturnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i] . "|" . $purchased_price["".$i] . "|" . $symbols["".$i];
             } else {
-                $userreturnString = $userreturnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i] . "|" . $purchased_price["".$i] . "|" . $purchased_date["".$i] . ",";
+                $userreturnString = $userreturnString . $currencies["".$i] . "|" . $values["".$i] . "|" . $operation["".$i] . "|" . $purchased_price["".$i] . "|" . $symbols["".$i] . ",";
             }
         }
 
@@ -190,10 +190,7 @@
         //Use a dictionary to simplify repeated occurrences
         var dataDict = {};
         var purchased_valueDict = {};
-
-        var totalAssetCounter = 0;
-        var historyData = []; //Each entry should be {year: , month: , day: , totalAssets: }
-        let symbolDict = {};
+        var symbolDict = {};
 
         for(let i=0; i<dataSentArray.length;i++){
             var element = dataSentArray[i].split("|");
@@ -216,27 +213,34 @@
                     purchased_valueDict[element[0]] = element[3]
                 }
             }
-            //Update the counter with the current value
-            totalAssetCounter = totalAssetCounter + (parseInt(element[1]) * parseInt(element[3]))
-            // Push a dictionary to this
-            //!Should have format {year: , month: , day: , totalAssets: }
-            historyData.push({year: parseInt(element[4].substring(4, 6)), month: parseInt(element[4].substring(5, 7)), day: parseInt(element[4].substring(8, 10)), totalAssets: totalAssetCounter});
         }
 
         //Split data insto currencies and amounts
         var AmountData = Object.values(dataDict);
         var CurrencyData = Object.keys(dataDict);
         var purchased_valueData = Object.values(purchased_valueDict);
+        var SymbolData = Object.values(symbolDict);
 
         var data = [];
 
         // Create an array with values of the currencies at correspding indexs
         // Then can easily add it to the dictionary below
 
-        //!data must be a list of dictionary items for the pie chart to work
+        //NOTE: data must be a list of dictionary items for the pie chart to work
 
         for (let i=0; i<AmountData.length;i++) {
-            tempDict = {label: CurrencyData[i], value: currentPricesDict[CurrencyData[i]], amount: AmountData[i], purchased_value: purchased_valueData[i]}
+            var value = parseFloat(currentPricesDict[CurrencyData[i]]).toFixed(4);
+            var purchased_value = parseFloat(purchased_valueData[i]).toFixed(4);
+            var growth = value * 100 / purchased_value;
+            if (growth > 100) {
+                growth = growth - 100;
+                growth = growth.toFixed(4);
+            } else {
+                growth = 100 - growth;
+                growth = growth.toFixed(4);
+            }
+
+            tempDict = {label: CurrencyData[i], value: value, amount: AmountData[i], purchased_value: purchased_value, growth: growth, symbol: SymbolData[i]}
             data.push(tempDict)
             //Add value to total assest
             cash += currentPricesDict[CurrencyData[i]] * AmountData[i];
@@ -313,25 +317,25 @@
             }
         });
         // Define historySampleData (this should be changed to the appropriate data from the database)
-        // var historySampleData = [
-        //     { year: 2024, month: 01, day: 01, totalAssets: 8500 },
-        //     { year: 2024, month: 01, day: 10, totalAssets: 8512 },
-        //     { year: 2024, month: 01, day: 15, totalAssets: 8505 },
-        //     { year: 2024, month: 01, day: 17, totalAssets: 8496 },
-        //     { year: 2024, month: 01, day: 20, totalAssets: 8530 },
-        //     { year: 2024, month: 01, day: 28, totalAssets: 8643 },
-        //     { year: 2024, month: 02, day: 03, totalAssets: 8697 },
-        //     { year: 2024, month: 02, day: 04, totalAssets: 8704 }
-        // ];
+        var historySampleData = [
+            { year: 2024, month: 01, day: 01, totalAssets: 8500 },
+            { year: 2024, month: 01, day: 10, totalAssets: 8512 },
+            { year: 2024, month: 01, day: 15, totalAssets: 8505 },
+            { year: 2024, month: 01, day: 17, totalAssets: 8496 },
+            { year: 2024, month: 01, day: 20, totalAssets: 8530 },
+            { year: 2024, month: 01, day: 28, totalAssets: 8643 },
+            { year: 2024, month: 02, day: 03, totalAssets: 8697 },
+            { year: 2024, month: 02, day: 04, totalAssets: 8704 }
+        ];
 
         // Generates line chart using historySampleData
         var historyChart = new Chart("history-chart", {
             type: "line",
             data: {
-                labels: historyData.map(data => data.day.toString() + "/" + data.month.toString() + "/" + data.year.toString()),
+                labels: historySampleData.map(data => data.day.toString() + "/" + data.month.toString() + "/" + data.year.toString()),
                 datasets: [{
                     label: "Total Assets",
-                    data: historyData.map(data => data.totalAssets),
+                    data: historySampleData.map(data => data.totalAssets),
                     backgroundColor: "rgba(255,255,255,1.0)",
                     borderColor: "rgba(255,255,255,0.1)"
                 }]
