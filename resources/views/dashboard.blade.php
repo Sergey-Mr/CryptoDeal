@@ -193,6 +193,7 @@
 
         var totalAssetCounter = 0;
         var historyData = []; //Each entry should be {year: , month: , day: , totalAssets: }
+        let symbolDict = {};
 
         for(let i=0; i<dataSentArray.length;i++){
             var element = dataSentArray[i].split("|");
