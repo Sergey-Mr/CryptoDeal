@@ -192,7 +192,7 @@
         var purchased_valueDict = {};
 
         var totalAssetCounter = 0;
-        var historySampleData = []; //Each entry should be {year: , month: , day: , totalAssets: }
+        var historyData = []; //Each entry should be {year: , month: , day: , totalAssets: }
 
         for(let i=0; i<dataSentArray.length;i++){
             var element = dataSentArray[i].split("|");
@@ -219,9 +219,8 @@
             totalAssetCounter = totalAssetCounter + (parseInt(element[1]) * parseInt(element[3]))
             // Push a dictionary to this
             //!Should have format {year: , month: , day: , totalAssets: }
-            historySampleData.push({year: parseInt(element[4].substring(4), 6), month: parseInt(element[4].substring(5, 7)), day: parseInt(element[4].substring(8, 10)), totalAssets: totalAssetCounter});
-
-            }
+            historyData.push({year: parseInt(element[4].substring(4, 6)), month: parseInt(element[4].substring(5, 7)), day: parseInt(element[4].substring(8, 10)), totalAssets: totalAssetCounter});
+        }
 
         //Split data insto currencies and amounts
         var AmountData = Object.values(dataDict);
@@ -233,7 +232,7 @@
         // Create an array with values of the currencies at correspding indexs
         // Then can easily add it to the dictionary below
 
-        //NOTE: data must be a list of dictionary items for the pie chart to work
+        //!data must be a list of dictionary items for the pie chart to work
 
         for (let i=0; i<AmountData.length;i++) {
             tempDict = {label: CurrencyData[i], value: currentPricesDict[CurrencyData[i]], amount: AmountData[i], purchased_value: purchased_valueData[i]}
@@ -328,10 +327,10 @@
         var historyChart = new Chart("history-chart", {
             type: "line",
             data: {
-                labels: historySampleData.map(data => data.day.toString() + "/" + data.month.toString() + "/" + data.year.toString()),
+                labels: historyData.map(data => data.day.toString() + "/" + data.month.toString() + "/" + data.year.toString()),
                 datasets: [{
                     label: "Total Assets",
-                    data: historySampleData.map(data => data.totalAssets),
+                    data: historyData.map(data => data.totalAssets),
                     backgroundColor: "rgba(255,255,255,1.0)",
                     borderColor: "rgba(255,255,255,0.1)"
                 }]
