@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Artisan;
 use App\Models\Purchase;
+use Illuminate\Support\Facades\DB;
 
 class CryptoController extends Controller
 {
@@ -32,7 +33,28 @@ class CryptoController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10); // 10 is the number of items per page
 
-        return view('dashboard', compact('prices', 'purchases', 'purchases_hisotry'));
+        // Fetch user's purchases
+        // Fetch user's purchases
+        $purchases = DB::table('users')
+        ->join('purchases', 'users.id', '=', 'purchases.user_id')
+        ->where('users.id', Auth::user()->id)
+        ->select('purchases.symbol as currency', 'purchases.total_cost as total_cost', 'purchases.operation as operation_type')
+        ->get();
+
+        // Initialize arrays to hold bought and sold currencies
+        $boughtCurrencies = [];
+        $soldCurrencies = [];
+
+        // Iterate over purchases and categorize them
+        foreach ($purchases as $purchase) {
+        if ($purchase->operation_type == 1) {
+            $boughtCurrencies[] = $purchase;
+        } else if ($purchase->operation_type == -1) {
+            $soldCurrencies[] = $purchase;
+        }
+        }
+
+        return view('dashboard', compact('prices', 'purchases', 'purchases_hisotry', 'boughtCurrencies', 'soldCurrencies'));
     }
 
     public function watchlist(){

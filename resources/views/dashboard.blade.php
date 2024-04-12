@@ -81,6 +81,7 @@
                             <div class="transaction">
                                 <p style="color: rgb(175, 175, 175)">Time: {{ $purchase->created_at->format('H:i:s') }}</p>
                                 <p style="color: rgb(175, 175, 175)">Quantity: {{ $purchase->quantity }}</p>
+                                <p style="color: rgb(175, 175, 175)">Currency: <b>{{ $purchase->symbol }}</b></p>
                                 @if ($purchase->quantity == 1)
                                     <p><b>Price: {{ number_format($purchase->price_per_unit, 3, '.', ' ') }}</b></p>
                                 @else
@@ -291,7 +292,6 @@
             `;
         }
 
-
         var ctx = document.getElementById('portfolio-chart').getContext('2d');
         var portfolioChart = new Chart(ctx, {
             type: 'pie',
@@ -332,31 +332,42 @@
             }
         });
         //Generates line chart using history data
+        var boughtCurrencies = @json($boughtCurrencies);
+        var soldCurrencies = @json($soldCurrencies);
+
+        console.log(historyData);
         var historyChart = new Chart("history-chart", {
-            type: "line",
-            data: {
-                labels: historyData.map(data => data.day.toString() + "/" + data.month.toString() + "/" + data.year.toString()),
-                datasets: [{
-                    label: "Currency Total",
-                    data: historyData.map(data => data.totalAssets),
-                    backgroundColor: "rgba(255,255,255,1.0)",
-                    borderColor: "rgba(255,255,255,0.1)"
-                }]
+        type: "line",
+        data: {
+            labels: historyData.map(data => data.day.toString() + "/" + data.month.toString() + "/" + data.year.toString()),
+            datasets: [
+            {
+                label: "Bought Currencies",
+                data: boughtCurrencies.map(data => data.total_cost),
+                backgroundColor: "rgba(0,255,0,1.0)",
+                borderColor: "rgba(0,255,0,0.1)"
             },
-            options: {
-                scales: {
-                    y: {
-                        ticks: {
-                            // Adds dollar sign to cash values
-                            callback: function(value, index, ticks) {
-                                return '$' + value;
-                            }
+            {
+                label: "Sold Currencies",
+                data: soldCurrencies.map(data => data.total_cost),
+                backgroundColor: "rgba(255,0,0,1.0)",
+                borderColor: "rgba(255,0,0,0.1)"
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    ticks: {
+                        // Adds dollar sign to cash values
+                        callback: function(value, index, ticks) {
+                            return '$' + value;
                         }
                     }
-                },
-                // Removes the mouse click event, to ensure that the label is not interacative
-                events: ['mousemove','mouseout','touchstart','touchmove']
-            }
+                }
+            },
+            // Removes the mouse click event, to ensure that the label is not interacative
+            events: ['mousemove','mouseout','touchstart','touchmove']
+        }
         });
 
         var tableBody = document.getElementById('table-body');
