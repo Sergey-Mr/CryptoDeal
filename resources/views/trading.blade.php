@@ -82,7 +82,7 @@
 
                               <td class="text-center">{{ $cryptocurrency['coin_name'] }}</td>
                               <!--<td class="text-center">{{ $price['coin_price'] }}</td>-->
-                              <td class="text-center">{{ number_format($price['coin_price'], 5) }}</td>
+                              <td class="text-center">{{ number_format($price['coin_price'], 6) }}</td>
                               
                               <td class="text-center">
                                   @if ($cryptocurrency['percent_change_24h'] >= 0)

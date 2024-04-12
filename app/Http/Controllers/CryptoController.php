@@ -77,7 +77,10 @@ class CryptoController extends Controller
 
             if ($currentPrice !== null) {
                 $item->current_price = $currentPrice;
-                $item->percentage_change = number_format((($currentPrice - $item->price_saved) / $item->price_saved) * 100, 4);
+                if ($item->price_saved != 0){
+                    $item->percentage_change = number_format((($currentPrice - $item->price_saved) / $item->price_saved) * 100, 4);
+
+                }
             }
         }
 
