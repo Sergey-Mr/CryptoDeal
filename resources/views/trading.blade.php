@@ -21,6 +21,7 @@
                           </div>
                       </button>
                   </x-slot>
+                  <!--
                   <x-slot name="content">
                       <x-dropdown-link :href="route('trading.price.ascending')">
                         Price Acsending
@@ -35,6 +36,7 @@
                         % Descending
                       </x-dropdown-link>
                   </x-slot>
+                -->
 
             </x-dropdown>
 

@@ -55,10 +55,10 @@ class PurchaseController extends Controller
 
         $totalCost = $price * $quantity;
 
-        if (Auth::user()->balance <= $totalCost) {
-            //error_log('Insufficient funds');
-            return redirect()->route('buy.purchase')->with('error', 'Insufficient funds');
+        if (Auth::user()->balance < $totalCost) {
+            return redirect()->route('dashboard')->withErrors(['error' => 'You do not have enough balance to make this purchase']);
         }
+
         else{
             //error_log('Sufficient funds');
             $purchase = new Purchase;
@@ -102,7 +102,8 @@ class PurchaseController extends Controller
         $totalCurrency = $currencyQuantityUp - $currencyQuantityDown;
 
         if ($totalCurrency < $quantity) {
-            return redirect()->route('buy.purchase')->with('error', 'Insufficient amount of currency');
+            //return redirect()->route('buy.purchase')->with('error', 'Insufficient amount of currency');
+            return redirect()->route('dashboard')->withErrors(['error' => 'You do not have enough of this currency to sell']);
         }
 
         else{
@@ -119,7 +120,7 @@ class PurchaseController extends Controller
             Auth::user()->balance += $totalCost;
             Auth::user()->save();
         
-            return redirect()->route('dashboard')->with('success', 'Purchase successful');
+            return redirect()->route('dashboard')->with('success', 'Sell successful');
         }
 
         return view('trading', compact('symbol', 'price', 'name'));

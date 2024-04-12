@@ -18,7 +18,7 @@
         
             @endif
             <label for="quantity" id="amount" style="color: white">Quantity:</label>
-            <input type="number" id="quantity" name="quantity" min="1" default ="1" oninput="updateEstimate()">
+            <input type="number" id="quantity" name="quantity" min="1" value ="1" oninput="updateEstimate()">
             <p id="estimate" style="color: grey"></p>
 
             <div class="buy-sell">

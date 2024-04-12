@@ -90,15 +90,13 @@ class CryptoController extends Controller
         $cryptocurrencies = Cache::get('crypto_results', []);
         $prices = Cache::get('crypto_prices', []);
     
-        // Debug: print the sizes of the arrays
-        echo 'Size of $cryptocurrencies: ' . count($cryptocurrencies) . '<br>';
-        echo 'Size of $prices: ' . count($prices) . '<br>';
-    
         // Get the 'price' values from the $prices array
-        $priceValues = array_column($prices, 'price');
+        $priceValues = array_column($prices, 'coin_price');
     
         // Sort both arrays by the price values
-        array_multisort($priceValues, SORT_ASC, $cryptocurrencies, $prices);
+        array_multisort($priceValues, SORT_ASC, $cryptocurrencies);
+
+        dd($cryptocurrencies);
     
         return view('trading', compact('cryptocurrencies'));
     }

@@ -17,14 +17,22 @@
     <script>
         const FetchNews = async (page, q ) => {
             console.log("Fetching news...");
+            let currentDate = new Date();
+            currentDate.setDate(currentDate.getDate() - 1); // Subtract one day
+            let year = currentDate.getFullYear();
+            let month = ("0" + (currentDate.getMonth() + 1)).slice(-2); // Months are zero-based in JavaScript
+            let day = ("0" + currentDate.getDate()).slice(-2);
+            let formattedDate = `${year}-${month}-${day}`;
+            console.log(formattedDate);
             var url = 'https://newsapi.org/v2/everything?' +
                 'q=' +q+
-                '&from=2024-03-20&' +
+                '&from=' + formattedDate + '&' +
                 'pageSize=20&'+
                 'language=en&'+
                 'sortBy=popularity&' +
                 'apiKey=400a9021546d45b89bc34f3972b01add';
 
+            console.log(url);
             var req = new Request(url);
 
             let a = await fetch(req)

@@ -15,6 +15,23 @@
                 </div>
                 <div class="p-6 text-gray-900 dark:text-gray-100" id="total-assets"></div>
                 <div class="p-6 text-gray-900 dark:text-gray-100" id="percent-change"></div>
+                @if ($errors->any())
+                    <div class="p-6 text-red-500 text-lg mx-auto">
+                        <h3 class="text-center" style="color: red;">{{ __("Error message:") }}</h3>
+                        @foreach ($errors->all() as $error)
+                            <p class="text-center" style="color: red;">{{ $error }}</p>
+                        @endforeach
+                    </div>
+                @endif
+
+                @if (session('success'))
+                    <div class="p-6 text-red-500 text-lg mx-auto">
+                        <h3 class="text-center" style="color: green;"><b>{{ __("Message:") }}</b></h3>
+                        <div class="alert alert-success text-center" style="color:green;">
+                            {{ session('success') }}
+                        </div>
+                    </div>
+                @endif
             </div>
             <div class="dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
