@@ -10,6 +10,9 @@
 
 CryptoDeal is a real-time crypto trading simulator developed with Laravel, offers a dynamic platform where newcomers to crypto trading can acquire valuable skills and delve into market trends, while experienced traders can experiment with new ideas in a risk-free environment. With its user-friendly interface and integrated analytical tools, CryptoDeal provides a seamless experience for honing strategies and navigating the complexities of the cryptocurrency market.
 
+## Video demo 
+[![Please, open the video manually through YouTube](http://img.youtube.com/vi/-xfwiOmWmRo/0.jpg)](http://www.youtube.com/watch?v=-xfwiOmWmRo "CryptoDeal demo")
+
 ## Technologies Used
 
 Project is created with:
