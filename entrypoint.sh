@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Copy .env.example to .env if .env does not exist
+if [ ! -f .env ]; then
+    cp .env.example .env
+fi
+
 # Wait for MySQL to be ready
 while ! mysqladmin ping -h"$DB_HOST" --silent; do
     echo "Waiting for MySQL to be ready..."
