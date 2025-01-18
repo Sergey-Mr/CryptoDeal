@@ -4,23 +4,29 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: laravel-app
-    container_name: laravel-app
+    image: trader
+    container_name: trader
     restart: unless-stopped
-    working_dir: /var/www/html
+    working_dir: /var/www/trader
     volumes:
-      - .:/var/www/html
+      - .:/var/www/trader
+      - .:/docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    environment:
+      DB_HOST: db
+      DB_DATABASE: trader
+      DB_USERNAME: root
+      DB_PASSWORD: root
     networks:
       - laravel
 
   web:
     image: nginx:latest
-    container_name: nginx
+    container_name: trader-nginx
     restart: unless-stopped
     ports:
       - "8050:85"
     volumes:
-      - .:/var/www/html
+      - .:/var/www/trader
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - app
@@ -29,7 +35,7 @@ services:
 
   db:
     image: mysql:5.7
-    container_name: mysql
+    container_name: trader-mysql
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
