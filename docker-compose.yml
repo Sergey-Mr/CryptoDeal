@@ -23,7 +23,7 @@ services:
     container_name: trader-nginx
     restart: unless-stopped
     ports:
-      - "8050:85"
+      - "8060:85"
     volumes:
       - .:/var/www/trader
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
