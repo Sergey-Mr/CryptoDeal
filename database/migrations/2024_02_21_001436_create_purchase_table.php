@@ -19,7 +19,6 @@ return new class extends Migration
             $table->decimal('price_per_unit', 8, 2);
             $table->integer('quantity');
             $table->decimal('total_cost', 8, 2);
-            $table->timestamp('purchase_date');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('purchase');
+        Schema::dropIfExists('purchases');
     }
 };
