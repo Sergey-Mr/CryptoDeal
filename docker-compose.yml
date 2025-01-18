@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   app:
     build:
@@ -22,7 +21,7 @@ services:
       - "8050:85"
     volumes:
       - .:/var/www/html
-      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - app
     networks:

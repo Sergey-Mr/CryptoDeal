@@ -30,6 +30,12 @@ USER www-data
 # Install Laravel dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+
+# Set entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
+
 # Expose port 9000 for PHP-FPM
 EXPOSE 9000
 
