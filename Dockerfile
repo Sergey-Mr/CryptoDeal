@@ -25,12 +25,6 @@ COPY . /var/www/html
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . /var/www/html
 
-# Change current user to www
-USER www-data
-
-# Install Laravel dependencies
-RUN composer install --no-dev --optimize-autoloader
-
 # Copy entrypoint script
 COPY entrypoint.sh /entrypoint.sh
 
